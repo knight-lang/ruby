@@ -39,11 +39,9 @@ end
 
 
 if __FILE__ == $0
-	def usage = abort("usage: #{File.basename $0} (-e 'program' | -f file)")
-
 	case ($*.length == 2 && $*.shift)
 	when '-e' then Kn.run $*.shift
-	when '-f' then Kn.run open($*.shift, &:read)
-	else usage
+	when '-f' then Kn.run File.read $*.shift
+	else abort "usage: #{File.basename $0} (-e 'program' | -f file)"
 	end
 end
