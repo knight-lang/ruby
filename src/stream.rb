@@ -24,8 +24,8 @@ module Kn
       take! /(?:[\s(){}:]+|\#[^\n]+)+/
     end
 
-    def take!(regex)
-      result = @source.slice!(/\A#{regex}/) or return
+    def take!(regex, group=0)
+      result = @source.slice!(/\A#{regex}/, group) or return
       @lineno += result.count("\n")
       result
     end

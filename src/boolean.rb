@@ -3,7 +3,7 @@ require_relative 'value'
 module Kn
   class Boolean < Value
     def self.parse(stream)
-      stream.take! /([TF])[[:upper:]_]*/ and new $1 == 'T'
+      input = stream.take!(/([TF])[[:upper:]_]*/, 1) and new input == 'T'
     end
 
     TRUE = new(true)

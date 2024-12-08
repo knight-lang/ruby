@@ -3,7 +3,7 @@ require_relative 'value'
 module Kn
   class Integer < Value
     def self.parse(stream)
-      stream.take! /\d+/ and new $&
+      input = stream.take! /\d+/ and new input
     end
 
     def initialize(value)
