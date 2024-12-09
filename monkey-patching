@@ -5,9 +5,9 @@ class Object
   def coerce(lhs) = [lhs, to_int]
   alias call itself
   alias truthy? itself
-  # def to_str = to_s rescue call.to_str
-  # def to_int = to_i rescue call.to_int
-  # def to_ary = to_a rescue call.to_ary
+  def to_str = to_s rescue call.to_str
+  def to_int = to_i rescue call.to_int
+  def to_ary = to_a rescue call.to_ary
 end
 
 class String
@@ -78,7 +78,7 @@ FNS = {
   ?C => -> { _1.().() },
   ?Q => -> { exit _1.to_int },
   ?D => -> { print (t = _1.()).inspect; t },
-  ?O => -> { print (x = _1.to_str), x.chomp!('\\') ? '' : "\n" },
+  ?O => -> { print (x = _1.to_str)[-1] == '\\' ? x.chop : x + "\n" },
   ?L => -> { _1.to_ary.length },
   ?! => -> { !_1.truthy? },
   ?~ => -> { -_1.to_int },
@@ -122,7 +122,7 @@ def parse!
   when @src.slice!(/\A(?:'([^']*)'|"([^"]*)")/)       then $+
   when @src.slice!(/\A(?:([TF])|N)[A-Z_]*/)           then $1&.then { _1 == 'T' }
   when @src.slice!(/\A@/)                             then []
-  when f=FNS[@src[0]] && @src.slice!(/\A([A-Z_]*|.)/) then Fn.new f, f.arity.times.map { parse! }
+  when (f=FNS[@src[0]]) && @src.slice!(/\A([A-Z_]+|.)/) then Fn.new f, f.arity.times.map { parse! }
   else raise "unknown token start: #{@src[0].inspect}"
   end
 end
