@@ -1,19 +1,26 @@
 #!/usr/bin/env ruby
 
+class Object
+  def coerce(lhs) = [lhs, to_int]
+  include Comparable
+  alias call itself
+  alias truthy? itself
+  def falsey? = !truthy?
+  def to_str = to_s
+  def to_int = to_i
+  def to_ary = to_a
+end
+
 class String
-  def coerce(lhs) = [lhs, self.to_i]
   alias _old_to_i to_i; def to_i = sub(/0d.+/, '')._old_to_i # get rid of the `0d12` bug
-  alias to_int to_i
   alias to_ary chars
   def truthy? = !empty?
   alias ascii ord
 end
 
 class Array
-  include Comparable
   # TODO: could be fixed
   def *(r) = cycle(r.to_int).to_a # still needed?
-  def coerce(lhs) = [lhs, to_int]
   alias to_int length
   def to_str = join("\n")
   alias ** join
@@ -22,41 +29,27 @@ end
 
 
 class Integer
-  alias to_str to_s
   def to_ary = abs.digits.reverse.map { _1 * (self <=> 0) }
   alias truthy? nonzero?
   alias ascii chr
 end
 
 class NilClass
-  def coerce(lhs) = [lhs, to_int]
-  alias to_int to_i
-  alias to_str to_s
-  alias to_ary to_a
   def inspect = 'null'
 end
 
 class TrueClass
-  def coerce(lhs) = [lhs, to_int]
   def to_int = 1
   def to_ary = [self]
-  alias to_str to_s
   def >(r) = !r.truthy?
   def <(r) = false
 end
 
 class FalseClass
-  def coerce(lhs) = [lhs, to_int]
   def to_int = 0
   def to_ary = []
-  alias to_str to_s
   def >(r) = false
   def <(r) = !!r.truthy?
-end
-
-class Object
-  alias call itself
-  alias truthy? itself
 end
 
 class Fn
@@ -137,4 +130,4 @@ def parse!(source)
   end
 end
 
-parse!($*.shift == '-f' ? File.read($*.shift) : $*.shift).()
+parse!($*.shift == '-f' ? File.read($*.shift) : +$*.shift).()
