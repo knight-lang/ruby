@@ -1,14 +1,13 @@
 #!/usr/bin/env ruby
 
 class Object
-  def coerce(lhs) = [lhs, to_int]
   include Comparable
+  def coerce(lhs) = [lhs, to_int]
   alias call itself
   alias truthy? itself
-  def falsey? = !truthy?
-  def to_str = to_s
-  def to_int = to_i
-  def to_ary = to_a
+  # def to_str = to_s rescue call.to_str
+  # def to_int = to_i rescue call.to_int
+  # def to_ary = to_a rescue call.to_ary
 end
 
 class String
@@ -19,12 +18,11 @@ class String
 end
 
 class Array
-  # TODO: could be fixed
-  def *(r) = cycle(r.to_int).to_a # still needed?
-  alias to_int length
-  def to_str = join("\n")
-  alias ** join
   def truthy? = !empty?
+  def to_str = join(?\n)
+  alias to_int length
+  def *(r) = cycle(r).to_a
+  alias ** join
 end
 
 
@@ -72,15 +70,15 @@ end
 
 FNS = {
   # ARITY 0
-  ?P => -> { gets(chomp: true)&.sub(/\r+\z/, '') },
+  ?P => -> { gets&.sub(/\r*\n?\z/, '') },
   ?R => -> { rand 0..0xffff_ffff },
 
   # ARITY 1
   ?B => -> { _1 },
   ?C => -> { _1.().() },
   ?Q => -> { exit _1.to_int },
-  ?D => -> { _1.().tap{|x| $> << x.inspect} },
-  ?O => -> { (s = _1.to_str).end_with?('\\') ? print(s.chop) : print(s, "\n") },
+  ?D => -> { print (t = _1.()).inspect; t },
+  ?O => -> { print (x = _1.to_str), x.chomp!('\\') ? '' : "\n" },
   ?L => -> { _1.to_ary.length },
   ?! => -> { !_1.truthy? },
   ?~ => -> { -_1.to_int },
@@ -96,7 +94,7 @@ FNS = {
   ?/ => -> { _1.().fdiv(_2.()).truncate },
   ?% => -> { _1.() % _2.() },
   ?^ => -> { _1.() ** _2.() },
-  ?? => -> { _1.().eql? _2.() }, # lol does this fix it
+  ?? => -> { _1.().eql? _2.() }, # lol this fixes an issue with `0 == '0'` with `to_str` on ints.
   ?< => -> { _1.() < _2.() },
   ?> => -> { _1.() > _2.() },
   ?& => -> { (t = _1.()).truthy? ? _2.() : t },
@@ -113,21 +111,21 @@ FNS = {
   ?S => -> { (d = _1.().dup); d[_2.()||0, _3.()||0] = _4.(); d }, # TODO: eval order is diff bxn ruby versions
 }
 
-def parse!(source)
+def parse!
   # Delete leading whitespace
-  source.slice! /\A(?:[\s():]+|\#.*)+/
+  @src.slice! /\A(?:[\s():]+|\#.*)+/
 
+  # Parse otu the token
   case
-  when source.slice!(/\A\d+/) then $&.to_i
-  when source.slice!(/\A[a-z_][\w&&[^[:upper:]]]*/) then :"#$&"
-  when source.slice!(/\A(?:'([^']*)'|"([^"]*)")/) then $+
-  when source.slice!(/\A(?:([TF])|N)[A-Z_]*/) then $1&.then { _1 == 'T' }
-  when source.slice!(/\A@/) then []
-  when source.slice!(/\A(([A-Z])[A-Z_]*|.)/)
-    f = FNS[$+] or abort "unknown token start: #{$+.inspect}"
-    Fn.new(f, f.arity.times.map { parse! source })
-  else raise "unknown token start: #{source[0].inspect}"
+  when @src.slice!(/\A\d+/)                           then $&.to_i
+  when @src.slice!(/\A[a-z_][\w&&[^[:upper:]]]*/)     then :"#$&"
+  when @src.slice!(/\A(?:'([^']*)'|"([^"]*)")/)       then $+
+  when @src.slice!(/\A(?:([TF])|N)[A-Z_]*/)           then $1&.then { _1 == 'T' }
+  when @src.slice!(/\A@/)                             then []
+  when f=FNS[@src[0]] && @src.slice!(/\A([A-Z_]*|.)/) then Fn.new f, f.arity.times.map { parse! }
+  else raise "unknown token start: #{@src[0].inspect}"
   end
 end
 
-parse!($*.shift == '-f' ? File.read($*.shift) : +$*.shift).()
+@src = $*.shift == '-f' ? File.read($*.shift) : +$*.shift
+parse!.()
