@@ -4,7 +4,7 @@ class Object
   include Comparable
   def coerce(lhs) = [lhs, to_int]
   alias call itself
-  alias truthy? itself
+  def truthy? = !to_ary.empty?
   def to_str = to_s rescue call.to_str
   def to_int = to_i rescue call.to_int
   def to_ary = to_a rescue call.to_ary
@@ -13,12 +13,10 @@ end
 class String
   alias _old_to_i to_i; def to_i = sub(/0d.+/, '')._old_to_i # get rid of the `0d12` bug
   alias to_ary chars
-  def truthy? = !empty?
   alias ascii ord
 end
 
 class Array
-  def truthy? = !empty?
   def to_str = join(?\n)
   alias to_int length
   def *(r) = cycle(r).to_a
@@ -53,19 +51,13 @@ end
 class Fn
   def initialize(val, args) = (@val, @args = val, args)
   def call = @val.(*@args)
-  def to_int = call.to_int
-  def to_str = call.to_str
-  def to_ary = call.to_ary
-  def truthy? = call.truthy?
+  undef to_s
 end
 
 $vars = {}
 class Symbol
   def call = $vars[self]
-  def truthy? = call.truthy?
-  def to_int = call.to_int
-  def to_str = call.to_str
-  def to_ary = call.to_ary
+  undef to_s
 end
 
 FNS = {
