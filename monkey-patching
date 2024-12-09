@@ -1,9 +1,17 @@
 #!/usr/bin/env ruby
 
+# This is a fully Knight-2.0.1 compliant Knight implementation in Ruby. Unlike some "better" imple-
+# mentations, this one makes heavy use of Rby's "monkey patching" (the ability to modify stdlib
+# classes at-will), and implicit coercions. Don't try this at home, kids, unless you know both the
+# edge cases of Ruby quite well, and how they map onto the Knight specs!
+
+####################################################################################################
+#                                          Monkey Patches                                          #
+####################################################################################################
 class Object
   include Comparable
-  def coerce(lhs) = [lhs, to_int]
   alias call itself
+  def coerce(lhs) = [lhs, to_int]
   def falsey? = to_ary.empty?
   def to_str = to_s rescue call.to_str
   def to_int = to_i rescue call.to_int
@@ -11,23 +19,22 @@ class Object
 end
 
 class String
-  alias _old_to_i to_i; def to_i = sub(/0d.+/, '')._old_to_i # get rid of the `0d12` bug
   alias to_ary chars
   alias ascii ord
+  alias old_to_i to_i; def to_i = sub(/0d.+/,'').old_to_i # get rid of the `0d12` bug
 end
 
 class Array
-  def to_str = join(?\n)
   alias to_int length
-  def *(r) = cycle(r).to_a
   alias ** join
+  def to_str = join(?\n)
+  def *(r) = cycle(r.to_int).to_a # `*` is otherwise `Array#*` tries to coerce to a string first
 end
 
-
 class Integer
-  def to_ary = abs.digits.reverse.map { _1 * (self <=> 0) }
   alias falsey? zero?
   alias ascii chr
+  def to_ary = abs.digits.reverse.map{_1*(self<=>0)} # `self<=>0` is to support knight-2.0.1
 end
 
 class NilClass
@@ -37,40 +44,44 @@ end
 class TrueClass
   def to_int = 1
   def to_ary = [self]
-  def >(r) = r.falsey?
-  def <(r) = false
+  def <=>(r) = to_int <=> !r.falsey?
 end
 
 class FalseClass
   def to_int = 0
   def to_ary = []
-  def >(r) = false
-  def <(r) = !r.falsey?
+  def <=>(r) = to_int <=> !r.falsey?
 end
 
+class Symbol
+  $vars = {}
+  def call = $vars[self]
+  undef to_s
+end
+
+####################################################################################################
+#                                             Fn Class                                             #
+####################################################################################################
 class Fn
   def initialize(val, args) = (@val, @args = val, args)
   def call = @val.(*@args)
   undef to_s
 end
 
-$vars = {}
-class Symbol
-  def call = $vars[self]
-  undef to_s
-end
-
+####################################################################################################
+#                                            Functions                                             #
+####################################################################################################
 FNS = {
   # ARITY 0
   ?P => -> { gets&.sub(/\r*\n?\z/, '') },
-  ?R => -> { rand 0..0xffff_ffff },
+  ?R => -> { rand 0xffff_ffff },
 
   # ARITY 1
   ?B => -> { _1 },
   ?C => -> { _1.().() },
-  ?Q => -> { exit _1.to_int },
-  ?D => -> { print (t = _1.()).inspect; t },
-  ?O => -> { print (x = _1.to_str)[-1] == '\\' ? x.chop : x + "\n" },
+  ?Q => -> { exit _1.to_int }, # `to_int` needed for booleans, as ruby makes `exit true --> exit 0`.
+  ?D => -> { _1.().tap { |x| print x.inspect } },
+  ?O => -> { _1.to_str =~ /\K(\\)?\z/; print $`, $1 ? "" : "\n" },
   ?L => -> { _1.to_ary.length },
   ?! => -> { _1.falsey? },
   ?~ => -> { -_1.to_int },
@@ -82,8 +93,8 @@ FNS = {
   # Arity 2
   ?+ => -> { _1.() + _2.() },
   ?- => -> { _1.() - _2.() },
-  ?* => -> { _1.() * (_2.()||0) },
-  ?/ => -> { _1.().fdiv(_2.()).truncate },
+  ?* => -> { _1.() * _2.() }, # `||0`
+  ?/ => -> { _1.().fdiv(_2.()).truncate }, # Solve division with negative numbers
   ?% => -> { _1.() % _2.() },
   ?^ => -> { _1.() ** _2.() },
   ?? => -> { _1.().eql? _2.() }, # lol this fixes an issue with `0 == '0'` with `to_str` on ints.
@@ -97,27 +108,38 @@ FNS = {
 
   # Arity 3
   ?I => -> { (_1.falsey? ? _3 : _2).() },
-  ?G => -> { _1.()[_2.()||0, _3.()||0] },
+  ?G => -> { _1.()[_2.() || 0, _3.() || 0] }, # `|| 0` is needed b/c nil isn't coerced to ints
 
   # Arity 4
-  ?S => -> { (d = _1.().dup); d[_2.()||0, _3.()||0] = _4.(); d }, # TODO: eval order is diff bxn ruby versions
+  # (Note: this won't work in older ruby versions, as `_4.()` is evaluated before `_2.()` / `_3.()`)
+  ?S => -> { (d = _1.().dup); d[_2.() || 0, _3.() || 0] = _4.(); d },
 }
 
+####################################################################################################
+#                                             Parsing                                              #
+####################################################################################################
 def parse!
   # Delete leading whitespace
   @src.slice! /\A(?:[\s():]+|\#.*)+/
 
-  # Parse otu the token
+  # Parse out the token
   case
-  when @src.slice!(/\A\d+/)                           then $&.to_i
-  when @src.slice!(/\A[a-z_][\w&&[^[:upper:]]]*/)     then :"#$&"
-  when @src.slice!(/\A(?:'([^']*)'|"([^"]*)")/)       then $+
-  when @src.slice!(/\A(?:([TF])|N)[A-Z_]*/)           then $1&.then { _1 == 'T' }
-  when @src.slice!(/\A@/)                             then []
-  when (f=FNS[@src[0]]) && @src.slice!(/\A([A-Z_]+|.)/) then Fn.new f, f.arity.times.map { parse! }
-  else raise "unknown token start: #{@src[0].inspect}"
+  when @src.slice!(/\A\d+/)                     then $&.to_i
+  when @src.slice!(/\A[a-z_][\w&&[^A-Z]]*/)     then :"#$&"
+  when @src.slice!(/\A(?:'([^']*)'|"([^"]*)")/) then $+
+  when @src.slice!(/\A(?:([TF])|N)[A-Z_]*/)     then $1&.then { _1 == 'T' }
+  when @src.slice!(/\A@/)                       then []
+  else
+    f = FNS[@src.slice!(/\A([A-Z_]+|.)/)] or abort "unknown token start: #{$&[0].inspect}"
+    Fn.new f, f.arity.times.map { parse! }
   end
 end
 
-@src = $*.shift == '-f' ? File.read($*.shift) : +$*.shift
+####################################################################################################
+#                            Command-Line Argument Parsing & Execution                             #
+####################################################################################################
+@src = case $*.shift
+when '-e' then +$*.shift
+when '-f' then $*.shift&.then(&File.method(:read))
+end or abort "usage: #$0 (-e expr | -f file)"
 parse!.()
