@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+
+Dir['src/*'].each { require_relative _1 }

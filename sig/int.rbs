@@ -1,0 +1,26 @@
+module Kn
+  class Int
+    include Comparable
+
+    @num: Integer
+
+    def initialize: (Integer) -> void
+
+    def truthy?: () -> boolish
+    def to_s: () -> String
+    def to_i: () -> Integer
+    def to_a: () -> Array[Integer]
+
+    alias inspect to_s
+
+    def +:  (_ToI rhs) -> Int
+    def -:  (_ToI rhs) -> Int
+    def *:  (_ToI rhs) -> Int
+    def /:  (_ToI rhs) -> Int
+    def %:  (_ToI rhs) -> Int
+    def **: (_ToI rhs) -> Int
+
+    def <=>: (_ToI rhs) -> Integer
+    def ==: (untyped other) -> bool
+  end
+end

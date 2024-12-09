@@ -1,0 +1,19 @@
+module Kn
+  class Boolean
+    TRUE: untyped
+
+    FALSE: untyped
+
+    def self.new: (untyped value) -> untyped
+
+    def to_s: () -> ('true' | 'false')
+
+    alias inspect to_s
+
+    def to_i: () -> (1 | 0)
+
+    def truthy?: () -> bool
+
+    def to_a: () -> ([Boolean] | [])
+  end
+end
