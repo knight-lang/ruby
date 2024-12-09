@@ -131,10 +131,10 @@ def parse!(source)
   when source.slice!(/\A(?:([TF])|N)[A-Z_]*/) then $1&.then { _1 == 'T' }
   when source.slice!(/\A@/) then []
   when source.slice!(/\A(([A-Z])[A-Z_]*|.)/)
-    f = FNS[$+]
+    f = FNS[$+] or abort "unknown token start: #{$+.inspect}"
     Fn.new(f, f.arity.times.map { parse! source })
   else raise "unknown token start: #{source[0].inspect}"
   end
 end
 
-parse!(+$*[1].tap { $*.clear }).()
+parse!($*.shift == '-f' ? File.read($*.shift) : $*.shift).()
