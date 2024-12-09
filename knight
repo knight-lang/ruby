@@ -2,6 +2,7 @@
 
 class String
   def coerce(lhs) = [lhs, self.to_i]
+  alias _old_to_i to_i; def to_i = sub(/0d.+/, '')._old_to_i # get rid of the `0d12` bug
   alias to_int to_i
   alias to_ary chars
   def truthy? = !empty?
@@ -22,7 +23,7 @@ end
 
 class Integer
   alias to_str to_s
-  def to_ary = abs.digits.reverse
+  def to_ary = abs.digits.reverse.map { _1 * (self <=> 0) }
   alias truthy? nonzero?
   alias ascii chr
 end
@@ -113,10 +114,10 @@ FNS = {
 
   # Arity 3
   ?I => -> { (_1.truthy? ? _2 : _3).() },
-  ?G => -> { _1.()[_2.(), _3.()] },
+  ?G => -> { _1.()[_2.()||0, _3.()||0] },
 
   # Arity 4
-  ?S => -> { (d = _1.().dup); d[_2.(), _3.()] = _4.(); d }, # TODO: eval order is diff bxn ruby versions
+  ?S => -> { (d = _1.().dup); d[_2.()||0, _3.()||0] = _4.(); d }, # TODO: eval order is diff bxn ruby versions
 }
 
 def parse!(source)
