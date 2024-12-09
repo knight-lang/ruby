@@ -39,6 +39,8 @@ class TrueClass
   def to_int = 1
   def to_ary = [self]
   alias to_str to_s
+  def >(r) = !r.truthy?
+  def <(r) = false
 end
 
 class FalseClass
@@ -46,6 +48,8 @@ class FalseClass
   def to_int = 0
   def to_ary = []
   alias to_str to_s
+  def >(r) = false
+  def <(r) = !!r.truthy?
 end
 
 class Object
@@ -91,6 +95,7 @@ FNS = {
   ?- => -> { _1.() - _2.() },
   ?* => -> { _1.() * _2.() },
   ?/ => -> { _1.() / _2.() },
+  ?% => -> { _1.() % _2.() },
   ?^ => -> { _1.() ** _2.() },
   ?? => -> { _1.() == _2.() },
   ?< => -> { _1.() < _2.() },
