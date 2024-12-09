@@ -4,7 +4,7 @@ class Object
   include Comparable
   def coerce(lhs) = [lhs, to_int]
   alias call itself
-  def truthy? = !to_ary.empty?
+  def falsey? = to_ary.empty?
   def to_str = to_s rescue call.to_str
   def to_int = to_i rescue call.to_int
   def to_ary = to_a rescue call.to_ary
@@ -26,7 +26,7 @@ end
 
 class Integer
   def to_ary = abs.digits.reverse.map { _1 * (self <=> 0) }
-  alias truthy? nonzero?
+  alias falsey? zero?
   alias ascii chr
 end
 
@@ -37,7 +37,7 @@ end
 class TrueClass
   def to_int = 1
   def to_ary = [self]
-  def >(r) = !r.truthy?
+  def >(r) = r.falsey?
   def <(r) = false
 end
 
@@ -45,7 +45,7 @@ class FalseClass
   def to_int = 0
   def to_ary = []
   def >(r) = false
-  def <(r) = !!r.truthy?
+  def <(r) = !r.falsey?
 end
 
 class Fn
@@ -72,7 +72,7 @@ FNS = {
   ?D => -> { print (t = _1.()).inspect; t },
   ?O => -> { print (x = _1.to_str)[-1] == '\\' ? x.chop : x + "\n" },
   ?L => -> { _1.to_ary.length },
-  ?! => -> { !_1.truthy? },
+  ?! => -> { _1.falsey? },
   ?~ => -> { -_1.to_int },
   ?A => -> { _1.().ascii },
   ?, => -> { [_1.()] },
@@ -89,14 +89,14 @@ FNS = {
   ?? => -> { _1.().eql? _2.() }, # lol this fixes an issue with `0 == '0'` with `to_str` on ints.
   ?< => -> { _1.() < _2.() },
   ?> => -> { _1.() > _2.() },
-  ?& => -> { (t = _1.()).truthy? ? _2.() : t },
-  ?| => -> { (t = _1.()).truthy? ? t : _2.() },
+  ?& => -> { (t = _1.()).falsey? ? t : _2.() },
+  ?| => -> { (t = _1.()).falsey? ? _2.() : t },
   ?; => -> { _1.(); _2.() },
   ?= => -> { $vars[_1] = _2.() },
-  ?W => -> { _2.() while _1.truthy? },
+  ?W => -> { _2.() until _1.falsey? },
 
   # Arity 3
-  ?I => -> { (_1.truthy? ? _2 : _3).() },
+  ?I => -> { (_1.falsey? ? _3 : _2).() },
   ?G => -> { _1.()[_2.()||0, _3.()||0] },
 
   # Arity 4
