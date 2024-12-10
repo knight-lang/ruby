@@ -130,7 +130,7 @@ def parse!
   when @src.slice!(/\A(?:([TF])|N)[A-Z_]*/)     then $1&.then { _1 == 'T' }
   when @src.slice!(/\A@/)                       then []
   else
-    f = FNS[@src.slice!(/\A([A-Z_]+|.)/)] or abort "unknown token start: #{$&[0].inspect}"
+    f = FNS[@src.slice!(/\A([A-Z_]+|.)/)[0]] or abort "unknown token start: #{$&[0].inspect}"
     Fn.new f, f.arity.times.map { parse! }
   end
 end
