@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# This is a fully Knight-2.0.1 compliant Knight implementation in Ruby. Unlike some "better" imple-
+# This is a fully Knight-3.0 compliant Knight implementation in Ruby. Unlike some "better" imple-
 # mentations, this one makes heavy use of Rby's "monkey patching" (the ability to modify stdlib
 # classes at-will), and implicit coercions. Don't try this at home, kids, unless you know both the
 # edge cases of Ruby quite well, and how they map onto the Knight specs!
@@ -73,7 +73,7 @@ end
 ####################################################################################################
 FNS = {
   # ARITY 0
-  ?P => -> { gets&.sub(/\r*\n?\z/, '') },
+  ?P => -> { gets chomp: true },
   ?R => -> { rand 0xffff_ffff },
 
   # ARITY 1
