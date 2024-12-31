@@ -1,76 +1,24 @@
 #!/usr/bin/env ruby
-
-class Class
-  alias d define_method
-  alias a alias_method
-end
-
-class Object
-  a:call,:itself
-  d(:coerce){[_1,to_int]}
-  d(:falsey?){to_ary.empty?}
-  d(S=:to_str){to_s rescue call.to_str}
-  d(I=:to_int){to_i rescue call.to_int}
-  d(A=:to_ary){to_a rescue call.to_ary}
-end
-
-class String
-  a A,:chars
-  a:ascii,:ord
-  a:o,:to_i;d(:to_i){sub(/0d.+/,'').o}
-  a:s,:slice!
-  d(:P){
-    s /\A([\s():]|\#.*)+/
-    s(/\A\d+/)?$&.to_i:
-    s(/\A[a-z\d_]+/)?:"#$&":
-    s(/\A(['"])(.*?)\1/m)?$2:
-    s(/\A(([TF])|N)[A-Z_]*/)?$2&&$2==?T:
-    s(/\A@/)?[]:
-    F.new((f=F[s(/\A([A-Z_]+|.)/)[0].intern]),(0...f.arity).map{self.P})
-  }
-end
-
-class Array;a I,:size;a:**,:join;d(S){join ?\n};d(:*){cycle(_1.to_int).to_a}end
-
-class Integer
-  a:falsey?,:zero?
-  a:ascii,:chr
-  d(A){abs.digits.reverse} # TODO: remove abs
-end
-
-class<<p;d(:inspect){'null'}end
-class<<!p;d(I){1};d(A){[self]};d(:<=>){to_int<=>!_1.falsey?}end
-class<<!0;d(I){0};d(A){[]};d(:<=>){to_int<=>!_1.falsey?}end
-class Symbol;$V={};d(:call){$V[self]};undef to_s;end
-class F;d(:initialize){@v,@a=_1,_2};d(:call){@v.(*@a)};undef to_s;end
-F={
-  P:->{gets&.chomp},
-  R:->{rand 0xffffffff},
-  B:->{_1},
-  C:->{_1.().()},
-  Q:->{exit _1.to_int},
-  D:->{$><<(q=_1.()).inspect;q},
-  O:->{/\K(\\)?\z/=~_1;print$`,$1?"":"\n"}, #"
-  L:->{_1.to_ary.size},
-  A:->{_1.().ascii},
-  '!':->{_1.falsey?},
-  '~':->{-_1.to_int},
-  ',':->{[_1.()]},
-  '[':->{_1.()[0]},
-  ']':->{_1.()[1..]},
-  '+':->{_1.()+_2.()},
-  '-':->{_1.()-_2.()},
-  '*':->{_1.()*(_2.()||0)},
-  '/':->{_1.().fdiv(_2.()).truncate},
-  '%':->{_1.()%_2.()},
-  '^':->{_1.()**_2.()},
-  '?':->{_1.().eql?_2.()},
-  '<':->{(_1.()<=>_2.())<0},
-  '>':->{(_1.()<=>_2.())>0},
-  '&':->{(t=_1.()).falsey?? t:_2.()},
-  '|':->{(t=_1.()).falsey??_2.():t},
-  ';':->{_1.();_2.()},
-  '=':->{$V[_1]=_2.()},
-}
-
-a,b=$*;$*.clear;(a=='-f'?File.read(b):+b).P.()
+class Class alias d define_method;alias a alias_method end;class Object;;a:call,
+:itself;d(:coerce){[_1,to_int]};d(S=:to_str){to_s rescue call.to_str};d(:falsey?
+){to_ary.empty?};d(I=:to_int){to_i rescue call.to_int};;d(A=:to_ary){to_a rescue
+call.to_ary}end;class String;a:o,:to_i;d(:to_i){sub(/0d.+/,'').o};a:s,:slice!;a\
+A,:chars;a:ascii,:ord;d(:P){s /\A([\s():]|\#.*)+/;s(/\A\d+/)?$&.to_i: s(/\A@/)?[
+]:s(/\A[a-z\d_]+/)?:"#$&":s(/\A(['"])(.*?)\1/m)?$2:s(/\A(([TF])|N)[A-Z_]*/)?$2&&
+$2==?T:N.new((f=F[s(/\A([A-Z_]+|.)/)[0].intern]),(0...f.arity).map{self.P})}end;
+class Integer;a:falsey?,:zero?;a:ascii,:chr;d(A){abs.digits.reverse}end;class<<p
+d(:inspect){'null'}end;class Array;d(:*){cycle(_1.to_int).to_a};a I,:size;;a:**,
+:join;d(S){join ?\n}end;class<<!p;;d(:<=>){to_int<=>!_1.falsey?};d(A){[self]};d(
+I){1}end;class Symbol;$V={};d(:call){$V[self]};undef to_s;end;class<<!0;;d(I){0}
+d(A){[]};d(:<=>){to_int<=>!_1.falsey?}end;class N;d(:initialize){@v,@a=_1,_2};d(
+:call){@v.(*@a)};undef to_s;end;F={'/':->{_1.().fdiv(_2.()).truncate},C:->{_1.()
+.()},D:->{$><<(q=_1.()).inspect;q},S:->{(d=_1.().dup)[_2.()||0,_3.()||0]=_4.();d
+},W:->{_2.()until _1.falsey?},O:->{/\K(\\)?\z/=~_1;print$`,$1?"":"\n"},P:->{gets #" <-- fix syntax highlights
+&.chomp},R:->{rand 0xffffffff},'&':->{(t=_1.()).falsey?? t:_2.()},'|':->{(t=_1.(
+)).falsey??_2.():t},B:->{_1},'<':->{(_1.()<=>_2.())<0},I:->{(_1.falsey??_3: _2).
+()},'>':->{(_1.()<=>_2.())>0},G:->{_1.()[_2.()||0,_3.()||0]},'^':->{_1.()**_2.()
+},A:->{_1.().ascii},Q:->{exit _1.to_int},L:->{_1.to_ary.size},'=':->{$V[_1]=_2.(
+)},'?':->{_1.().eql?_2.()},'!':->{_1.falsey?},'-':->{_1.()-_2.()},'*':->{_1.()*(
+_2.()||0)},'%':->{_1.()%_2.()},'+':->{_1.()+_2.()},';':->{_1.();_2.()},']':->{_1
+.()[1..]},'~':->{-_1.to_int},',':->{[_1.()]},'[':->{_1.()[0]},};a,b=$*;$*.clear;
+(a=='-f'?File.read(b):+b).P.()
