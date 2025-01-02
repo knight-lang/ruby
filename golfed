@@ -8,8 +8,8 @@ A,:chars;a:ascii,:ord;d(:P){s /\A([\s():]|\#.*)+/;s(/\A\d+/)?$&.to_i: s(/\A@/)?[
 $2==?T:N.new((f=F[s(/\A([A-Z_]+|.)/)[0].intern]),(0...f.arity).map{self.P})}end;
 class Integer;a:falsey?,:zero?;a:ascii,:chr;d(A){abs.digits.reverse}end;class<<p
 d(:inspect){'null'}end;class Array;d(:*){cycle(_1.to_int).to_a};a I,:size;;a:**,
-:join;d(S){join ?\n}end;class<<!p;;d(:<=>){to_int<=>!_1.falsey?};d(A){[self]};d(
-I){1}end;class Symbol;$V={};d(:call){$V[self]};undef to_s;end;class<<!0;;d(I){0}
+:join;d(S){join ?\n}end;class<<!p;d(:<=>){to_int<=>!_1.falsey?};d(A){[self]};d(I
+){1}end;class Symbol;$V={};d(:call){$V[self]};undef to_s;end;class<<!0;d(I){0};;
 d(A){[]};d(:<=>){to_int<=>!_1.falsey?}end;class N;d(:initialize){@v,@a=_1,_2};d(
 :call){@v.(*@a)};undef to_s;end;F={'/':->{_1.().fdiv(_2.()).truncate},C:->{_1.()
 .()},D:->{$><<(q=_1.()).inspect;q},S:->{(d=_1.().dup)[_2.()||0,_3.()||0]=_4.();d
