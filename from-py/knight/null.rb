@@ -1,0 +1,52 @@
+from __future__ import annotations
+from knight import Value, Stream, Literal, RunError
+from typing import Optional
+import re
+
+class Null(Literal[None]):
+	""" Used to represent the null class. """
+
+	_REGEX = re.compile(r'N[A-Z]*')
+
+	@classmethod
+	def parse(cls, stream: Stream) -> Optional[Null]:
+		""" Returns `Null` if the stream starts with `N`. """
+
+		return cls() if stream.matches(Null._REGEX) else None
+
+	def __init__(self):
+		"""
+		Creates a new Null.
+
+		Note that this is overloaded because `Literal` expects an argument
+		for `data`, but `null` should be constructible without specifying
+		the `data` field, so this does that for us.
+		"""
+		super().__init__(None)
+
+	def __int__(self) -> int:
+		""" Simply returns `0` """
+		return 0
+
+	def __str__(self) -> str:
+		""" Simply returns an empty string. """
+		return ''
+
+	def __iter__(self):
+		return iter(())
+
+	def __repr__(self) -> str:
+		""" Gets a debugging representation of this class. """
+		return 'null'
+
+	def __eq__(self, rhs: object) -> bool:
+		""" Null is only equal to itself. """
+		return isinstance(rhs, Null)
+
+	def __lt__(self, _: Value):
+		""" Comparisons to Null are invalid. """
+		raise RunError('cannot compare with Null.')
+
+	def __gt__(self, _: Value):
+		""" Comparisons to Null are invalid. """
+		raise RunError('cannot compare with Null.')

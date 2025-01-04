@@ -1,0 +1,51 @@
+from __future__ import annotations
+
+from knight import Stream
+from typing import Optional
+
+TYPES = []
+
+class Value():
+	"""
+	The type in Knight that represents any representable entity.
+	"""
+
+	@staticmethod
+	def parse(stream: Stream) -> Optional[Value]:
+		"""
+		Parses a value out of the `stream`, or returns `None` if
+		nothing can be parsed.
+		"""
+		stream.strip()
+
+		for cls in TYPES:
+			if (value := cls.parse(stream)) is not None:
+				return value
+		return None
+
+	def __init_subclass__(cls, parse: bool  =True, **rest):
+		""" Adds `cls` to the list of classes to parse. """
+		super().__init_subclass__(**rest)
+
+		if parse:
+			TYPES.append(cls)
+
+	def run(self) -> Value:
+		""" Return the result of running this value. """
+		raise NotImplementedError()
+
+	def __int__(self) -> int:
+		""" Converts this class to an integer. """
+		return int(self.run())
+
+	def __str__(self) -> str:
+		""" Converts this class to a string. """
+		return str(self.run())
+
+	def __bool__(self) -> bool:
+		""" Converts this class to a boolean. """
+		return bool(self.run())
+
+	def __iter__(self):
+		# """ Converts this class to a iterean. """
+		return iter(self.run())
