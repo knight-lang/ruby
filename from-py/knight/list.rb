@@ -1,8 +1,10 @@
 # The array class in Knight.
 class List < Literal
+	TYPES.append self
+
 	# Parses a List out from the stream.
 	def self.parse(stream)
-		stream.matches(/\G@/) and new []
+		stream.matches /\G@/ and new []
 	end
 
 	def to_s

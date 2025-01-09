@@ -1,48 +1,33 @@
-from __future__ import annotations
-from knight import Value
-from typing import TypeVar, Generic
+# A class used to represent a value that has a piece of data associated
+# with it.
+#
+# This is not meant to be initialized directly, and instead the
+# subclasses of it should be used.
+class Literal < Value
 
-T = TypeVar('T')
+	protected attr_reader :data
 
-class Literal(Value, Generic[T], parse=False):
-	"""
-	A class used to represent a value that has a piece of data associated
-	with it.
+	# Creates a new `Literal` instance with the given data.
+	def initialize(data)
+		@data = data
+	end
 
-	Thi sis not meant to be initialized directly, and instead the
-	subclasses of it should be used.
-	"""
+	# Running a Literal simply returns itself.
+	alias run itself
 
-	data: T
+	# Simply converts this class's `data` to a `str`.
+	def to_s = @data.to_s
 
-	def __init__(self, data: T):
-		""" Creates a new `Literal` instance with the given data. """
-		super().__init__()
-		self.data = data
+	# Simply converts this class's `data` to an `int`.
+	def to_i = @data.to_i
 
-	def run(self) -> Value:
-		""" Running a Literal simply returns itself. """
-		return self
+	# Simply converts this class's `data` to an `bool`.
+	def truthy? = @data
 
-	def __str__(self) -> str:
-		""" Simply converts this class's `data` to a `str`. """
-		return str(self.data)
+	# Gets a debugging representation of this class.
+	def inspect = @data.inspect
 
-	def __int__(self) -> int:
-		""" Simply converts this class's `data` to an `int`. """
-		return int(self.data)
-
-	def __bool__(self) -> bool:
-		""" Simply converts this class's `data` to an `bool`. """
-		return bool(self.data)
-
-	def __repr__(self) -> str:
-		""" Gets a debugging representation of this class. """
-		return str(self)
-
-	def __eq__(self, rhs: object) -> bool:
-		"""
-		Returns whether `rhs` is of the _same_ class, 
-		and their data is equivalent.
-		"""
-		return type(self) == type(rhs) and self.data == rhs.data
+	# Returns whether `rhs` is of the _same_ class,
+	# and their data is equivalent.
+	def ==(rhs) = rhs.is_a?(self.class) && @data == rhs.data
+end

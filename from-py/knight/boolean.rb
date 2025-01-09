@@ -1,5 +1,7 @@
 # Used to represent boolean types within Knight
 class Boolean < Literal
+	TYPES.append self
+
 	# Parses a `Boolean` if the stream starts with `T` or `F`.
 	def self.parse(stream)
 		match = stream.matches(/\G([TF])[A-Z]*/, 1) and new match == 'T'

@@ -1,17 +1,7 @@
-from __future__ import annotations
-from knight import Value, Stream, ParseError, RunError, \
-                   Variable, Boolean, Null, String, Number, Array
-from typing import Optional, Dict, List, Callable
-from random import randint
-
-import re
-import subprocess
-
-_FUNCS: Dict[str, Callable] = {}
-
-class Function(Value):
-	""" Used to represent functions and their arguments within Knight. """
-
+$_FUNCS = {}
+# Used to represent functions and their arguments within Knight.
+class Function < Value
+	TYPES.append self
 	REGEX: re.Pattern = re.compile(r'[A-Z]+|.')
 
 	@staticmethod
@@ -56,6 +46,7 @@ class Function(Value):
 
 	def __repr__(self) -> str:
 		return f'Function({self.name}, {self.args})'
+end
 
 def register(name: Optional[str] = None) -> Callable:
 	"""

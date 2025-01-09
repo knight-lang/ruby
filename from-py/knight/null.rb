@@ -1,52 +1,38 @@
-from __future__ import annotations
-from knight import Value, Stream, Literal, RunError
-from typing import Optional
-import re
+# Used to represent the null class.
+class Null < Literal
+	TYPES.append self
 
-class Null(Literal[None]):
-	""" Used to represent the null class. """
+	# Returns `Null` if the stream starts with `N`.
+	def self.parse(stream)
+		stream.matches /\GN[A-Z]*/ and new
+	end
 
-	_REGEX = re.compile(r'N[A-Z]*')
+	def initialize
+		# Creates a new Null.
 
-	@classmethod
-	def parse(cls, stream: Stream) -> Optional[Null]:
-		""" Returns `Null` if the stream starts with `N`. """
+		# Note that this is overloaded because `Literal` expects an argument
+		# for `data`, but `null` should be constructible without specifying
+		# the `data` field, so this does that for us.
+		super nil
+	end
 
-		return cls() if stream.matches(Null._REGEX) else None
+	# Simply returns `0`
+	def to_i = 0
 
-	def __init__(self):
-		"""
-		Creates a new Null.
+	# Simply returns an empty array.
+	def to_a = []
 
-		Note that this is overloaded because `Literal` expects an argument
-		for `data`, but `null` should be constructible without specifying
-		the `data` field, so this does that for us.
-		"""
-		super().__init__(None)
+	# Simply returns an empty string.
+	def to_s = ''
 
-	def __int__(self) -> int:
-		""" Simply returns `0` """
-		return 0
+	# Null is never truthy
+	def truthy? = false
 
-	def __str__(self) -> str:
-		""" Simply returns an empty string. """
-		return ''
+	# Gets a debugging representation of this class.
+	def inspect = 'null'
 
-	def __iter__(self):
-		return iter(())
+	# Null is only equal to itself.
+	def ==(rhs) = rhs.is_a?(Null)
 
-	def __repr__(self) -> str:
-		""" Gets a debugging representation of this class. """
-		return 'null'
-
-	def __eq__(self, rhs: object) -> bool:
-		""" Null is only equal to itself. """
-		return isinstance(rhs, Null)
-
-	def __lt__(self, _: Value):
-		""" Comparisons to Null are invalid. """
-		raise RunError('cannot compare with Null.')
-
-	def __gt__(self, _: Value):
-		""" Comparisons to Null are invalid. """
-		raise RunError('cannot compare with Null.')
+	# Comparisons to Null are invalid.
+	def <=>(_other) = raise RunError('cannot compare with Null.')
