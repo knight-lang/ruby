@@ -45,3 +45,4 @@ class Int < Literal
 	def ^(rhs) = Int.new((@data ** rhs.to_i).to_i)
 
 	def <=>(rhs) = @data <=> rhs.to_i
+end

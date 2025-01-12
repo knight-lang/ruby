@@ -1,16 +1,5 @@
-from __future__ import annotations
-from knight import Value, Stream, Literal, ParseError
-from typing import Optional
-import re
-
-class String(Literal[str]):
-	"""
-	The number class in Knight.
-
-	As per the Knight specs, the only number type within Knight is
-	integral numbers. As such, we use Python's builtin `int` class.
-	"""
-
+# The string class in Knight.
+class Str < Literal
 	BEGIN_REGEX: re.Pattern = re.compile(r'[\'\"]')
 	SINGLE_REGEX: re.Pattern = re.compile(r"([^']*)'")
 	DOUBLE_REGEX: re.Pattern = re.compile(r'([^"]*)"')
@@ -23,37 +12,22 @@ class String(Literal[str]):
 		'\t': '\\t',
 	}
 
-	@classmethod
-	def parse(cls, stream: Stream) -> Optional[String]:
-		"""
-		Parses a `String` from the `stream`, returning `None` if the
-		nothing can be parsed.
+  # Parses a `Str` from the `stream`, returning `None` if the
+  # nothing can be parsed.
+  #
+  # If a starting quote is matched and no ending quote is, then a
+  # `ParseError` will be raised.
+	def self.parse(stream)
+		quote = stream.matches(/\G['"]/) or return
+		body = stream.matches(/\G([^#{quote}]*)#{quote}/, 1) or stream.raise "unterminated string encountered"
+		new body
+	end
 
-		If a starting quote is matched and no ending quote is, then a
-		`ParseError` will be raised.
-		"""
-		quote = stream.matches(String.BEGIN_REGEX)
+	def to_a = @body.chars
 
-		if not quote:
-			return None
+	def inspect = @body.inspect
 
-		regex = String.SINGLE_REGEX if quote == "'" else String.DOUBLE_REGEX
-		body = stream.matches(regex, 1)
-
-		if body is None:
-			raise ParseError(f'unterminated string encountered: {stream}')
-		return cls(body)
-
-	def __iter__(self):
-		for char in str(self):
-			yield String(char)
-
-	def __repr__(self) -> str:
-		""" Gets a debugging representation of this class. """
-		r = ""
-		for char in self.data:
-			r += self.REPLACEMENT_MAP[char] if char in self.REPLACEMENT_MAP else char
-		return f'"{r}"'
+	def to_i = @obdy.to_i
 
 	def __int__(self) -> int:
 		"""
@@ -63,17 +37,17 @@ class String(Literal[str]):
 		numbers do not cause exceptions to be thrown, but rather handles
 		them in a specific fashion. See the Knight specs for details.
 		"""
-		match = String.INT_REGEX.match(self.data)
+		match = Str.INT_REGEX.match(self.data)
 
 		return int(match[0]) if match else 0
 
-	def __add__(self, rhs: Value) -> String:
+	def __add__(self, rhs: Value) -> Str:
 		""" Concatenates `self` and `rhs` """
-		return String(f'{self}{rhs}')
+		return Str(f'{self}{rhs}')
 
-	def __mul__(self, rhs: Value) -> String:
+	def __mul__(self, rhs: Value) -> Str:
 		""" Repeats `self` for `rhs` times """
-		return String(str(self) * int(rhs))
+		return Str(str(self) * int(rhs))
 
 	def __lt__(self, rhs: Value) -> bool:
 		"""

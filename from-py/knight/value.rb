@@ -8,7 +8,7 @@ class Value
 
 		TYPES.each do |cls|
 			next unless defined? cls.parse
-			value = cls.parse stream and return value
+			value = cls.parse(stream) and return value
 		end
 
 		nil

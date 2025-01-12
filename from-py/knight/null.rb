@@ -36,3 +36,4 @@ class Null < Literal
 
 	# Comparisons to Null are invalid.
 	def <=>(_other) = raise RunError('cannot compare with Null.')
+end
