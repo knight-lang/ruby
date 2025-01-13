@@ -1,4 +1,5 @@
 require_relative 'options'
+require_relative 'env'
 
 require_relative 'error'
 require_relative 'value'

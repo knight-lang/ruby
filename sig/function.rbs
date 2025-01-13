@@ -13,16 +13,16 @@ module Knight
     #
     # This will both parse the function name, and its arguments. If not
     # all the arguments could be parsed, a `ParseError` is raised.
-    def self.parse: (__todo__ stream) -> (nil | __todo__)
+    def self.parse: (Stream stream) -> instance?
 
     # Creates a new function that'll execute `func` with `args`.
     #
     # Note that the `name` is only used for `__repr__`.
     def initialize: (__todo__ func, __todo__ name, __todo__ args) -> void
 
-    def run: () -> __todo__
+    def run: () -> Value
 
-    def inspect: () -> ::String
+    def inspect: () -> String
   end
 
   # Used to register a new function with the given name.
@@ -31,97 +31,4 @@ module Knight
   # first letter of the function's name.
   def self?.register: (__todo__ name) -> __todo__
                     | (__todo__ which, __todo__ name) -> __todo__
-
-  # Reads a single line from stdin.
-  def self?.prompt: () -> __todo__
-
-  def self?.random: () -> __todo__
-
-  def self?.eval_: (__todo__ text) -> __todo__
-
-  # Simply returns its argument, unevaluated.
-  def self?.block: (__todo__ blk) -> __todo__
-
-  def self?.call: (__todo__ blk) -> __todo__
-
-  def self?.system: (__todo__ cmd) -> __todo__
-
-  # Quits with the given status code.
-  def self?.quit_: (__todo__ code) -> __todo__
-
-  # Negates its argument.
-  def self?.not_: (__todo__ arg) -> __todo__
-
-  # Gets the length of its argument.
-  def self?.length: (__todo__ arg) -> __todo__
-
-  # Dumps a debug representation of `arg` and returns `arg`.
-  def self?.dump: (__todo__ arg) -> __todo__
-
-  # Prints `arg` to stdout with a trailing newline.
-  #
-  # If `arg` ends with a `\\`, the newline is omitted and the slash is
-  # removed.
-  def self?.output: (__todo__ arg) -> __todo__
-
-  # Returns `arg` numerically negated
-  def self?.negate: (__todo__ arg) -> __todo__
-
-  def self?.box: (__todo__ arg) -> __todo__
-
-  def self?.head: (__todo__ arg) -> __todo__
-
-  def self?.tail: (__todo__ arg) -> __todo__
-
-  def self?.ascii: (__todo__ arg) -> __todo__
-
-  def self?.add: (__todo__ lhs, __todo__ rhs) -> __todo__
-
-  # Subtracts `rhs` from `lhs`.
-  def self?.sub: (__todo__ lhs, __todo__ rhs) -> __todo__
-
-  # Multiplies `lhs` by `rhs`.
-  def self?.mul: (__todo__ lhs, __todo__ rhs) -> __todo__
-
-  # Divides `lhs` by `rhs`.
-  def self?.div: (__todo__ lhs, __todo__ rhs) -> __todo__
-
-  # Modulos `lhs` by `rhs`.
-  def self?.mod: (__todo__ lhs, __todo__ rhs) -> __todo__
-
-  # Exponentiates `lhs` by `rhs`.
-  def self?.pow: (__todo__ lhs, __todo__ rhs) -> __todo__
-
-  # Checks to see if `lhs` is less than `rhs`.
-  def self?.lth: (__todo__ lhs, __todo__ rhs) -> __todo__
-
-  # Checks to see if `lhs` is greater than `rhs`.
-  def self?.gth: (__todo__ lhs, __todo__ rhs) -> __todo__
-
-  # Checks to see if `lhs` is equal to `rhs`.
-  def self?.eql: (__todo__ lhs, __todo__ rhs) -> __todo__
-
-  # Returns `lhs` if its falsey, otherwise `rhs`.
-  def self?.and_: (__todo__ lhs, __todo__ rhs) -> __todo__
-
-  # Returns `lhs` if its truthy, otherwise `rhs`.
-  def self?.or_: (__todo__ lhs, __todo__ rhs) -> __todo__
-
-  # Simply executes `lhs`, then `rhs`, then returns `rhs`.
-  def self?.then: (__todo__ lhs, __todo__ rhs) -> __todo__
-
-  # Executes `body` while `cond` is truthy.
-  def self?.while_: (__todo__ cond, __todo__ body) -> __todo__
-
-  # Assigns `value` to `name`, where `name` must be an `Variable`.
-  #
-  # Returns `value`.
-  def self?.assign: (__todo__ name, __todo__ value) -> __todo__
-
-  # Executes and returns `iftrue` or `iffalse` based on `cond`.
-  def self?.if_: (__todo__ cond, __todo__ iftrue, __todo__ iffalse) -> __todo__
-
-  def self?.get: (__todo__ text, __todo__ start, __todo__ amnt) -> __todo__
-
-  def self?.set: (__todo__ text, __todo__ start, __todo__ amnt, __todo__ repl) -> __todo__
 end

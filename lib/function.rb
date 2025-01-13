@@ -11,10 +11,8 @@ module Knight
     # This will both parse the function name, and its arguments. If not
     # all the arguments could be parsed, a `ParseError` is raised.
     def self.parse(stream)
-      name = stream.peek
-      $_FUNCS.include? name or return
-
-      func = $_FUNCS[name]
+      name = stream.peek or return
+      func = $_FUNCS[name] or return
       stream.matches(/\G([A-Z]+|.)/)
 
       args = [] #: Array[Value]
@@ -80,12 +78,8 @@ module Knight
     blk.run.run
   end
 
-  register '`', def system(cmd)
-    # Runs `cmd` in a shell, returning its stdout.
-    raise 'todo'
-    # proc = subprocess.run(str(cmd), shell=True, capture_output=True)
-
-    # Str.new(proc.stdout.decode())
+  register '`', def system_(cmd)
+    Str.new `#{cmd}`
   end
 
   # Quits with the given status code.
@@ -222,7 +216,7 @@ module Knight
   end
 
   # Simply executes `lhs`, then `rhs`, then returns `rhs`.
-  register ';', def then(lhs, rhs)
+  register ';', def then_(lhs, rhs)
     lhs.run
     rhs.run
   end
