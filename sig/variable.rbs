@@ -1,35 +1,28 @@
 module Knight
-  $_ENV: Hash[String, Knight::Value]
-
   # Represents an Variable within Knight.
   #
   # Because all Variables in Knight are global---and don't go out of
   # scope---we have a single dict that keeps track of _all_ Variables.
   class Variable < Value
-    @name: __todo__
+    @name: String
+    @value: Value?
+
+    self.@variables: Hash[String, Variable]
 
     # Parses an Variable out from the stream.
     #
     # This returns `None` if the stream doesn't start with a lowercase
     # letter, or an underscore.
-    def self.parse: (__todo__ stream) -> __todo__
+    def self.parse: (Stream stream) -> instance?
 
-    # Creates a new Variable associated with the given `name`.
-    def initialize: (__todo__ name) -> void
+    def self.new: (String name) -> instance
 
-    # Gets a debugging mode representation of this Variable.
-    def inspect: () -> ::String
+    def initialize: (String name) -> void
 
-    # Fetches the value associated with this Variable from the list
-    # of known Variables.
-    #
-    # If the Variable has not been assigned yet (cf `assign`), then a
-    # `RunError` will be raised.
-    def run: () -> __todo__
+    def inspect: () -> String
 
-    # Associated the Value `value` with this Variable.
-    #
-    # Any previously associated value with this Variable is discarded.
-    def assign: (__todo__ value) -> __todo__
+    def run: () -> Value
+
+    def assign: (Value value) -> void
   end
 end

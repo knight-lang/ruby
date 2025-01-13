@@ -10,7 +10,7 @@ class Stream
   def empty?: () -> bool
 
   # Removes all leading whitespace and quotes
-  def strip_whitespace_and_comments!: () -> String
+  def strip_whitespace_and_comments!: () -> void
 
   # Raises a parsing message at the given location
   def raise: (String msg) -> bot
@@ -23,7 +23,7 @@ class Stream
   # If the stream doesn't match, `None` is returned. Otherwise, the
   # stream is updated, and the `index`th group is returned. (The
   # default value of `0` means the entire matched regex is returned.)
-  def matches: (String regex, ?Integer index) -> String?
+  def matches: (Regexp regex, ?Integer index) -> String?
 
-  def matches!: (String regex, ?Integer index) -> String?
+  def matches!: (Regexp regex, ?Integer index) -> String?
 end

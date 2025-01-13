@@ -2,17 +2,6 @@ module Knight
   # The string class in Knight.
   class Str < Literal
     TYPES.append self
-    # BEGIN_REGEX: re.Pattern = re.compile(r'[\'\"]')
-    # SINGLE_REGEX: re.Pattern = re.compile(r"([^']*)'")
-    # DOUBLE_REGEX: re.Pattern = re.compile(r'([^"]*)"')
-    # INT_REGEX: re.Pattern = re.compile(r'^\s*[-+]?\d+')
-    # REPLACEMENT_MAP = {
-    #   '\"': '\\"',
-    #   '\\': '\\\\',
-    #   '\r': '\\r',
-    #   '\n': '\\n',
-    #   '\t': '\\t',
-    # }
 
     # Parses a `Str` from the `stream`, returning `None` if the
     # nothing can be parsed.
@@ -25,24 +14,41 @@ module Knight
       new body
     end
 
-    def truthy? = !@data.empty?
+    # Returns whether `self` is nonempty.
+    def truthy?
+      !@data.empty?
+    end
 
-    def to_a = @data.chars.map { Str.new _1 }
+    # Converts `self` to an array
+    def to_a
+      @data.each_char.map { Str.new _1 }
+    end
 
-    def to_i = @data.strip[/\A[-+]?\d+/].to_i
+    # Converts `self` to an integer, using Knight's conversion rules.
+    def to_i
+      # FIXME: freaking `0d123` parses in ruby
+      @data.strip[/\A[-+]?\d+/].to_i
+    end
 
-    # Concatenates `self` and `rhs`
-    def +(rhs) = Str.new("#@data#{rhs}")
+    # Concatenates `self` and `other`
+    def +(other)
+      Str.new "#@data#{other}"
+    end
 
-    # Repeats `self` for `rhs` times
-    def *(rhs) = Str.new(@data * rhs.to_i)
+    # Repeats `self` for `count` times
+    def *(count)
+      Str.new @data * count.to_i
+    end
 
-    # Checks to see if `self` is lexicographically less than `rhs`.
-    def <(rhs) = @data < rhs.to_s
+    # Lexicographically compares `self` to `other`
+    def <=>(other)
+      return nil unless defined? other.to_s
+      @data <=> other.to_s
+    end
 
-    # Checks to see if `self` is lexicographically greater than `rhs`.
-    def >(rhs) = @data > rhs.to_s
-
-    def [](index) = @data[index]
+    # Indexes into `self`, returnirng a `Str` of what `@data[...]` would do.
+    def [](...)
+      @data.[](...)&.then { Str.new _1 }
+    end
   end
 end

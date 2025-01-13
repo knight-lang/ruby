@@ -6,26 +6,18 @@ module Knight
     #
     # If a starting quote is matched and no ending quote is, then a
     # `ParseError` will be raised.
-    def self.parse: (__todo__ stream) -> (nil | __todo__)
+    def self.parse: (Stream stream) -> instance?
 
-    def truthy?: () -> __todo__
+    def truthy?: () -> boolish
 
-    def to_a: () -> __todo__
+    def to_a: () -> Array[Str]
 
-    def to_i: () -> __todo__
+    def to_i: () -> Integer
 
-    # Concatenates `self` and `rhs`
-    def +: (__todo__ rhs) -> __todo__
+    def +: (_ToS other) -> Str
+    def *: (_ToI count) -> Str
+    def <=>: (untyped rhs) -> Integer?
 
-    # Repeats `self` for `rhs` times
-    def *: (__todo__ rhs) -> __todo__
-
-    # Checks to see if `self` is lexicographically less than `rhs`.
-    def <: (__todo__ rhs) -> __todo__
-
-    # Checks to see if `self` is lexicographically greater than `rhs`.
-    def >: (__todo__ rhs) -> __todo__
-
-    def []: (__todo__ index) -> __todo__
+    def []: (__todo__ index) -> Str
   end
 end
