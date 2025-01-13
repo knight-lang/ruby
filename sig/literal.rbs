@@ -5,7 +5,7 @@ module Knight
     def to_a: () -> Array[Value]
     def truthy?: () -> boolish
     def inspect: () -> String
-    def ==: (untyped) -> bool
+    def ==: (__todo__) -> bool
   end
 
   # A class used to represent a value that has a piece of data associated
@@ -13,13 +13,13 @@ module Knight
   #
   # This is not meant to be initialized directly, and instead the
   # subclasses of it should be used.
-  class Literal[T < _Literal] < Value
+  class Literal[T < __todo__] < Value
     include Comparable
 
-    attr_reader data: T
+    attr_reader data: __todo__
 
     # Creates a new `Literal` instance with the given data.
-    def initialize: (T data) -> void
+    def initialize: (__todo__ data) -> void
 
     # Running a Literal simply returns itself.
     alias run itself
@@ -38,6 +38,6 @@ module Knight
 
     # Returns whether `rhs` is of the _same_ class,
     # and their data is equivalent.
-    def ==: (untyped rhs) -> bool
+    def ==: (__todo__ rhs) -> bool
   end
 end

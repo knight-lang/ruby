@@ -21,6 +21,6 @@ module Kn
     def **: (_ToI rhs) -> Int
 
     def <=>: (_ToI rhs) -> Integer
-    def ==: (untyped other) -> bool
+    def ==: (__todo__ other) -> bool
   end
 end

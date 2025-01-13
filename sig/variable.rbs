@@ -6,16 +6,16 @@ module Knight
   # Because all Variables in Knight are global---and don't go out of
   # scope---we have a single dict that keeps track of _all_ Variables.
   class Variable < Value
-    @name: untyped
+    @name: __todo__
 
     # Parses an Variable out from the stream.
     #
     # This returns `None` if the stream doesn't start with a lowercase
     # letter, or an underscore.
-    def self.parse: (untyped stream) -> untyped
+    def self.parse: (__todo__ stream) -> __todo__
 
     # Creates a new Variable associated with the given `name`.
-    def initialize: (untyped name) -> void
+    def initialize: (__todo__ name) -> void
 
     # Gets a debugging mode representation of this Variable.
     def inspect: () -> ::String
@@ -25,11 +25,11 @@ module Knight
     #
     # If the Variable has not been assigned yet (cf `assign`), then a
     # `RunError` will be raised.
-    def run: () -> untyped
+    def run: () -> __todo__
 
     # Associated the Value `value` with this Variable.
     #
     # Any previously associated value with this Variable is discarded.
-    def assign: (untyped value) -> untyped
+    def assign: (__todo__ value) -> __todo__
   end
 end

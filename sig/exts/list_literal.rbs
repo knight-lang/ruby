@@ -1,13 +1,13 @@
 module Knight
   # The array type within Knight.
   class ListLiteral < Value
-    @vals: untyped
+    @vals: __todo__
 
     # Parses a List out from the stream.
-    def self.parse: (untyped stream) -> (nil | untyped)
+    def self.parse: (__todo__ stream) -> (nil | __todo__)
 
-    def initialize: (untyped vals) -> void
+    def initialize: (__todo__ vals) -> void
 
-    def run: () -> untyped
+    def run: () -> __todo__
   end
 end

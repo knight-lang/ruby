@@ -2,22 +2,22 @@ module Knight
   # The `NULL` type within Knight.
   class Null < Literal[nil]
     # Returns `Null` if the stream starts with `N`.
-    def self.parse: (untyped stream) -> untyped
+    def self.parse: (__todo__ stream) -> __todo__
 
     # Create a constant, so we don't need to keep creating new `Null` instances.
-    INSTANCE: untyped
+    INSTANCE: __todo__
 
     # Returns the singleton instance of `null` that exists.
-    def self.new: () -> untyped
+    def self.new: () -> __todo__
 
     # Simply returns `0`
     def to_i: () -> 0
 
     # Create a constant, as it's ever-so-slightly faster than creating an array.
-    EMPTY_ARRAY: ::Array[untyped]
+    EMPTY_ARRAY: ::Array[__todo__]
 
     # Simply returns an empty array.
-    def to_a: () -> untyped
+    def to_a: () -> __todo__
 
     # Simply returns an empty string.
     def to_s: () -> ""

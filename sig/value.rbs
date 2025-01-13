@@ -1,25 +1,25 @@
 module Knight
-  TYPES: ::Array[untyped]
+  TYPES: ::Array[__todo__]
 
   # The type in Knight that represents any representable entity.
   class Value
     # Parses a value out of the `stream`, or returns `None` if
     # nothing can be parsed.
-    def self.parse: (untyped stream) -> (untyped | nil)
+    def self.parse: (__todo__ stream) -> (__todo__ | nil)
 
     # Return the result of running this value.
-    def run: () -> untyped
+    def run: () -> __todo__
 
     # Converts this class to an integer.
-    def to_i: () -> untyped
+    def to_i: () -> __todo__
 
     # Converts this class to a string.
-    def to_s: () -> untyped
+    def to_s: () -> __todo__
 
     # Converts this class to a boolean.
-    def truthy?: () -> untyped
+    def truthy?: () -> __todo__
 
     # Converts this class to an array.
-    def to_a: () -> untyped
+    def to_a: () -> __todo__
   end
 end

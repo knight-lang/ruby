@@ -6,39 +6,39 @@ module Knight
   class Int < Literal[Integer]
     # Parses a Number out from the stream.
     # This returns `None` if the stream doesn't start with a digit.
-    def self.parse: (untyped stream) -> untyped
+    def self.parse: (__todo__ stream) -> __todo__
 
     # Returns whether `self` is nonzero.
-    def truthy?: () -> untyped
+    def truthy?: () -> __todo__
 
     # Returns the digits in `self`
-    def to_a: () -> untyped
+    def to_a: () -> __todo__
 
     # Converts `rhs` to an `Int` and adds it to `self.`
-    def +: (untyped rhs) -> untyped
+    def +: (__todo__ rhs) -> __todo__
 
     # Converts `rhs` to an `Int` and subtracts it from `self.`
-    def -: (untyped rhs) -> untyped
+    def -: (__todo__ rhs) -> __todo__
 
     # Converts `rhs` to an `Int` and multiples it by it `self.`
-    def *: (untyped rhs) -> untyped
+    def *: (__todo__ rhs) -> __todo__
 
     # Converts `rhs` to an `int` and divides `self` by it, with the
     # division operation conforming to the Knight specs.
     #
     # This will raise a `RunError` if `rhs` is zero.
-    def /: (untyped rhs) -> untyped
+    def /: (__todo__ rhs) -> __todo__
 
     # Converts `rhs` to an `int` and modulos `self` by it, with the
     # modulo operation conforming to the Knight specs.
     #
     # This will raise a `RunError` if `rhs` is zero.
-    def %: (untyped rhs) -> untyped
+    def %: (__todo__ rhs) -> __todo__
 
     # Converts `rhs` to an `int` and exponentiates `self` by it, with
     # the power of operation conforming to the Knight specs.
-    def **: (untyped rhs) -> untyped
+    def **: (__todo__ rhs) -> __todo__
 
-    def <=>: (untyped rhs) -> untyped
+    def <=>: (__todo__ rhs) -> __todo__
   end
 end

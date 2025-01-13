@@ -1,5 +1,5 @@
 module Knight
   def self?.run: (String stream) -> Value
 
-  def self?.Value: (untyped val) -> untyped
+  def self?.Value: (__todo__ val) -> __todo__
 end

@@ -1,10 +1,10 @@
 module Kn
   class Boolean
-    TRUE: untyped
+    TRUE: __todo__
 
-    FALSE: untyped
+    FALSE: __todo__
 
-    def self.new: (untyped value) -> untyped
+    def self.new: (__todo__ value) -> __todo__
 
     def to_s: () -> ('true' | 'false')
 

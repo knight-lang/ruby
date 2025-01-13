@@ -7,5 +7,5 @@ module Knight
     def boolean_functions?: () -> true
   end
 
-  def self?.options: () -> untyped
+  def self?.options: () -> __todo__
 end

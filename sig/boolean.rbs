@@ -12,7 +12,7 @@ module Knight
     def to_a: () -> (Array[self] | [])
     alias == equal?
 
-    def <=>: (untyped other) -> Integer?
+    def <=>: (__todo__ other) -> Integer?
 
     def +: (_Truthy other) -> Boolean
     def *: (_Truthy other) -> Boolean
