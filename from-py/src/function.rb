@@ -49,8 +49,8 @@ end
 
 # Reads a single line from stdin.
 register def prompt
-	raise 'todo'
-	line = gets
+	line = gets&.sub(/\r?\n?\z/, '') or return Null.new
+	Str.new line
 	# try:
 	# 	line = input()
 	# except EOFError:
@@ -265,9 +265,9 @@ register def get(text, start, amnt)
 	amnt = amnt.to_i
 
 	if collection.is_a? Str
-		Str.new collection[start..start+amnt]
+		Str.new collection[start...start+amnt]
 	else
-		List.new collection[start..start+amnt]
+		List.new collection[start...start+amnt]
 	end
 end
 
@@ -278,8 +278,8 @@ register def set(text, start, amnt, repl)
 	amnt = amnt.to_i
 
 	if collection.is_a? Str
-		Str.new collection.data[..start] + repl.to_s + collection.data[start+amnt..]
+		Str.new collection[...start] + repl.to_s + collection[start+amnt..]
 	else
-		List.new collection.data[..start] + repl.to_a + collection.data[start+amnt..]
+		List.new collection[...start] + repl.to_a + collection[start+amnt..]
 	end
 end

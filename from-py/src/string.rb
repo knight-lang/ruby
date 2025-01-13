@@ -41,4 +41,6 @@ class Str < Literal
 
 	# Checks to see if `self` is lexicographically greater than `rhs`.
 	def >(rhs) = @data > rhs.to_s
+
+	def [](index) = @data[index]
 end
