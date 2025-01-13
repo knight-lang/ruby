@@ -128,7 +128,7 @@ register def output(arg)
 	if s.end_with?('\\')
 		print s.chop
 	else
-		puts s
+		print s, "\n"
 	end
 
 	Null.new

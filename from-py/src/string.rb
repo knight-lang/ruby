@@ -24,6 +24,8 @@ class Str < Literal
 		new body
 	end
 
+	def truthy? = !@data.empty?
+
 	def to_a = @data.chars
 
 	def to_i = @data.strip[/\A[-+]?\d+/].to_i

@@ -20,7 +20,7 @@ class List < Literal
 	end
 
 	def truthy?
-		@data.nonempty?
+		!@data.empty?
 	end
 
 	def +(rhs)

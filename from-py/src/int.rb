@@ -12,6 +12,8 @@ class Int < Literal
 		match = stream.matches(/\G\d+/) and new match.to_i
 	end
 
+	def truthy? = @data.nonzero?
+
 	def to_a = @data.digits.reverse
 
 	# Converts `rhs` to an `Int` and adds it to `self.`
