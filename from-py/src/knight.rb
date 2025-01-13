@@ -11,6 +11,8 @@ require_relative 'options'
 require_relative 'string'
 require_relative 'variable'
 
+require_relative 'exts/list_literal'
+
 module Knight
   module_function
 
