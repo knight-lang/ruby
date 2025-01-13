@@ -5,7 +5,7 @@ module Knight
     # Parses a value out of the `stream`, or returns `None` if
     # nothing can be parsed.
     def self.parse(stream)
-      stream.strip
+      stream.strip_whitespace_and_comments!
 
       TYPES.each do |cls|
         next unless defined? cls.parse

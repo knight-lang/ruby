@@ -8,8 +8,15 @@ module Knight
       return unless Knight.options.list_literal?
       stream.matches /\G\{/ or return
       vals = [] #: __todo__
-      until stream.matches /\G\}/
-        vals << Value.parse(stream) || stream.raise("untermianted `{...}` sequence")
+
+      loop do
+        if (parsed = Value.parse(stream))
+          vals << parsed
+          next
+        end
+
+        break if stream.matches(/\G\}/)
+        stream.raise("untermianted `{...}` sequence")
       end
 
       new vals

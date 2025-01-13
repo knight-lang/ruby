@@ -1,27 +1,29 @@
 # The class used when parsing data.
 class Stream
-  @source: __todo__
+  @source: String
+  @position: Integer
 
   # Creates a new `Stream` with the given source.
-  def initialize: (__todo__ source) -> void
+  def initialize: (String source) -> void
 
   # Returns whether the stream is empty.
-  def empty?: () -> __todo__
+  def empty?: () -> bool
 
   # Removes all leading whitespace and quotes
-  def strip: () -> __todo__
+  def strip_whitespace_and_comments!: () -> String
 
-  def raise: (__todo__ msg) -> __todo__
+  # Raises a parsing message at the given location
+  def raise: (String msg) -> bot
 
   # Returns the first character of the stream
-  def peek: () -> (nil | __todo__)
+  def peek: () -> String?
 
   # Checks to see if the start of the stream matches `rxp`.
   #
   # If the stream doesn't match, `None` is returned. Otherwise, the
   # stream is updated, and the `index`th group is returned. (The
   # default value of `0` means the entire matched regex is returned.)
-  def matches: (__todo__ regex, ?::Integer index) -> __todo__
+  def matches: (String regex, ?Integer index) -> String?
 
-  def matches_: (__todo__ regex, ?::Integer index) -> (nil | __todo__)
+  def matches!: (String regex, ?Integer index) -> String?
 end

@@ -1,34 +1,24 @@
 module Knight
-  # The `NULL` type within Knight.
   class Null < Literal[nil]
-    # Returns `Null` if the stream starts with `N`.
-    def self.parse: (__todo__ stream) -> __todo__
+    def self.parse: (Stream stream) -> instance?
 
-    # Create a constant, so we don't need to keep creating new `Null` instances.
-    INSTANCE: __todo__
+    INSTANCE: instance
 
-    # Returns the singleton instance of `null` that exists.
-    def self.new: () -> __todo__
+    def self.new: () -> instance
 
-    # Simply returns `0`
     def to_i: () -> 0
 
-    # Create a constant, as it's ever-so-slightly faster than creating an array.
-    EMPTY_ARRAY: ::Array[__todo__]
+    # :nodoc:
+    EMPTY_ARRAY: Array[Value]
 
-    # Simply returns an empty array.
-    def to_a: () -> __todo__
+    def to_a: () -> []
 
-    # Simply returns an empty string.
-    def to_s: () -> ""
+    def to_s: () -> ''
 
-    # Null is never truthy
     def truthy?: () -> false
 
-    # Gets the debugging representation of `null`.
-    def inspect: () -> "null"
+    def inspect: () -> 'null'
 
-    # Null is only equal to itself.
     alias == equal?
   end
 end

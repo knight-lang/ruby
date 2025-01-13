@@ -18,7 +18,7 @@ module Kn
 	end
 
 	def parse(stream)
-		# strip leading comments and whitespace
+		# strip_whitespace_and_comments! leading comments and whitespace
 		stream.slice! /\A(?:[\s(){}\[\]:]+|\#[^\n]*)+/m
 
 		# parse out the value

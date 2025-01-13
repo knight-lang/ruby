@@ -1,10 +1,10 @@
 module Knight
   class Options
-    def floats?: () -> true
+    def floats?: () -> bool
 
-    def list_literal?: () -> true
+    def list_literal?: () -> bool
 
-    def boolean_functions?: () -> true
+    def boolean_functions?: () -> bool
   end
 
   def self?.options: () -> __todo__

@@ -29,7 +29,7 @@ module Knight
 
     # Simply returns an empty array.
     def to_a
-      EMPTY_ARRAY
+      EMPTY_ARRAY #: []
     end
 
     # Simply returns an empty string.
