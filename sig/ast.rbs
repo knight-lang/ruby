@@ -1,14 +1,14 @@
 module Knight
   $_FUNCS: Hash[String, __todo__]
   # Used to represent functions and their arguments within Knight.
-  class Function < Value
+  class Ast < Value
     @func: __todo__
 
     @name: __todo__
 
     @args: __todo__
 
-    # Parses a `Function` from the stream, returning `None` if the
+    # Parses a `Ast` from the stream, returning `None` if the
     # stream didn't start with a function character.
     #
     # This will both parse the function name, and its arguments. If not

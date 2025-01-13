@@ -2,10 +2,10 @@ module Knight
   $_FUNCS = {}
 
   # Used to represent functions and their arguments within Knight.
-  class Function < Value
+  class Ast < Value
     TYPES.append self
 
-    # Parses a `Function` from the stream, returning `None` if the
+    # Parses a `Ast` from the stream, returning `None` if the
     # stream didn't start with a function character.
     #
     # This will both parse the function name, and its arguments. If not
@@ -22,7 +22,7 @@ module Knight
         args.append value
       end
 
-      Function.new(func, name, args)
+      Ast.new(func, name, args)
     end
 
     # Creates a new function that'll execute `func` with `args`.
@@ -35,7 +35,7 @@ module Knight
     end
 
     def run = @func.call(*@args)
-    def inspect = "Function(#@name, #@args)"
+    def inspect = "Ast(#@name, #@args)"
   end
 
   module_function
