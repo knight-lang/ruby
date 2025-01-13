@@ -1,5 +1,5 @@
 module Knight
-  # Used to represent the null class.
+  # The `NULL` type within Knight.
   class Null < Literal
     TYPES.append self
 
@@ -8,34 +8,46 @@ module Knight
       stream.matches /\GN[A-Z]*/ and new
     end
 
-    def initialize
-      # Creates a new Null.
+    INSTANCE = new(nil).freeze
+    private_constant :INSTANCE
 
-      # Note that this is overloaded because `Literal` expects an argument
-      # for `data`, but `null` should be constructible without specifying
-      # the `data` field, so this does that for us.
-      super nil
+    # Returns the singleton instance of `null` that exists.
+    def self.new
+      INSTANCE
     end
 
     # Simply returns `0`
-    def to_i = 0
+    def to_i
+      0
+    end
+
+    # Create a constant, as it's ever-so-slightly faster than creating an array.s
+    EMPTY_ARRAY = [].freeze
+    private_constant :EMPTY_ARRAY
 
     # Simply returns an empty array.
-    def to_a = []
+    def to_a
+      EMPTY_ARRAY
+    end
 
     # Simply returns an empty string.
-    def to_s = ''
+    def to_s
+      ''
+    end
 
     # Null is never truthy
-    def truthy? = false
+    def truthy?
+      false
+    end
 
-    # Gets a debugging representation of this class.
-    def inspect = 'null'
+    # Gets the debugging representation of `null`.
+    def inspect
+      'null'
+    end
 
     # Null is only equal to itself.
-    def ==(rhs) = rhs.is_a?(Null)
-
-    # Comparisons to Null are invalid.
-    def <=>(_other) = raise RunError('cannot compare with Null.')
+    def ==(rhs)
+      rhs.is_a?(Null)
+    end
   end
 end
