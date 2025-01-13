@@ -1,0 +1,27 @@
+# The class used when parsing data.
+class Stream
+  @source: untyped
+
+  # Creates a new `Stream` with the given source.
+  def initialize: (untyped source) -> void
+
+  # Returns whether the stream is empty.
+  def empty?: () -> untyped
+
+  # Removes all leading whitespace and quotes
+  def strip: () -> untyped
+
+  def raise: (untyped msg) -> untyped
+
+  # Returns the first character of the stream
+  def peek: () -> (nil | untyped)
+
+  # Checks to see if the start of the stream matches `rxp`.
+  #
+  # If the stream doesn't match, `None` is returned. Otherwise, the
+  # stream is updated, and the `index`th group is returned. (The
+  # default value of `0` means the entire matched regex is returned.)
+  def matches: (untyped regex, ?::Integer index) -> untyped
+
+  def matches_: (untyped regex, ?::Integer index) -> (nil | untyped)
+end

@@ -17,7 +17,7 @@ module Knight
       func = $_FUNCS[name]
       stream.matches(/\G([A-Z]+|.)/)
 
-      args = []
+      args = [] #: Array[Value]
       func.arity.times do |arg|
         value = Value.parse(stream) or raise ParseError, "Missing argument #{arg} for function #{name}"
 
@@ -62,13 +62,10 @@ module Knight
 
   register def eval_(text)
     # Evaluates `text` as Knight code, returning its result.
-    value = Value.parse(Stream.new(str(text)))
+    value = Value.parse Stream.new text.to_s
 
-    if value.nil?
-      raise ParseError('Nothing to parse.')
-    else
-      return value.run
-    end
+    value.nil? and raise ParseError, 'Nothing to parse.'
+    value.run
   end
 
   # Simply returns its argument, unevaluated.
@@ -84,9 +81,9 @@ module Knight
   register '`', def system(cmd)
     # Runs `cmd` in a shell, returning its stdout.
     raise 'todo'
-    proc = subprocess.run(str(cmd), shell=True, capture_output=True)
+    # proc = subprocess.run(str(cmd), shell=True, capture_output=True)
 
-    Str.new(proc.stdout.decode())
+    # Str.new(proc.stdout.decode())
   end
 
   # Quits with the given status code.

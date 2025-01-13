@@ -1,0 +1,126 @@
+module Knight
+  $_FUNCS: Hash[String, untyped]
+  # Used to represent functions and their arguments within Knight.
+  class Function < Value
+    @func: untyped
+
+    @name: untyped
+
+    @args: untyped
+
+    # Parses a `Function` from the stream, returning `None` if the
+    # stream didn't start with a function character.
+    #
+    # This will both parse the function name, and its arguments. If not
+    # all the arguments could be parsed, a `ParseError` is raised.
+    def self.parse: (untyped stream) -> (nil | untyped)
+
+    # Creates a new function that'll execute `func` with `args`.
+    #
+    # Note that the `name` is only used for `__repr__`.
+    def initialize: (untyped func, untyped name, untyped args) -> void
+
+    def run: () -> untyped
+
+    def inspect: () -> ::String
+  end
+
+  # Used to register a new function with the given name.
+  #
+  # If no name is supplied, it will use the upper-case version of the
+  # first letter of the function's name.
+  def self?.register: (?untyped? which, untyped name) -> untyped
+
+  # Reads a single line from stdin.
+  def self?.prompt: () -> untyped
+
+  def self?.random: () -> untyped
+
+  def self?.eval_: (untyped text) -> untyped
+
+  # Simply returns its argument, unevaluated.
+  def self?.block: (untyped blk) -> untyped
+
+  def self?.call: (untyped blk) -> untyped
+
+  def self?.system: (untyped cmd) -> untyped
+
+  # Quits with the given status code.
+  def self?.quit_: (untyped code) -> untyped
+
+  # Negates its argument.
+  def self?.not_: (untyped arg) -> untyped
+
+  # Gets the length of its argument.
+  def self?.length: (untyped arg) -> untyped
+
+  # Dumps a debug representation of `arg` and returns `arg`.
+  def self?.dump: (untyped arg) -> untyped
+
+  # Prints `arg` to stdout with a trailing newline.
+  #
+  # If `arg` ends with a `\\`, the newline is omitted and the slash is
+  # removed.
+  def self?.output: (untyped arg) -> untyped
+
+  # Returns `arg` numerically negated
+  def self?.negate: (untyped arg) -> untyped
+
+  def self?.box: (untyped arg) -> untyped
+
+  def self?.head: (untyped arg) -> untyped
+
+  def self?.tail: (untyped arg) -> untyped
+
+  def self?.ascii: (untyped arg) -> untyped
+
+  def self?.add: (untyped lhs, untyped rhs) -> untyped
+
+  # Subtracts `rhs` from `lhs`.
+  def self?.sub: (untyped lhs, untyped rhs) -> untyped
+
+  # Multiplies `lhs` by `rhs`.
+  def self?.mul: (untyped lhs, untyped rhs) -> untyped
+
+  # Divides `lhs` by `rhs`.
+  def self?.div: (untyped lhs, untyped rhs) -> untyped
+
+  # Modulos `lhs` by `rhs`.
+  def self?.mod: (untyped lhs, untyped rhs) -> untyped
+
+  # Exponentiates `lhs` by `rhs`.
+  def self?.pow: (untyped lhs, untyped rhs) -> untyped
+
+  # Checks to see if `lhs` is less than `rhs`.
+  def self?.lth: (untyped lhs, untyped rhs) -> untyped
+
+  # Checks to see if `lhs` is greater than `rhs`.
+  def self?.gth: (untyped lhs, untyped rhs) -> untyped
+
+  # Checks to see if `lhs` is equal to `rhs`.
+  def self?.eql: (untyped lhs, untyped rhs) -> untyped
+
+  # Returns `lhs` if its falsey, otherwise `rhs`.
+  def self?.and_: (untyped lhs, untyped rhs) -> untyped
+
+  # Returns `lhs` if its truthy, otherwise `rhs`.
+  def self?.or_: (untyped lhs, untyped rhs) -> untyped
+
+  # Simply executes `lhs`, then `rhs`, then returns `rhs`.
+  def self?.then: (untyped lhs, untyped rhs) -> untyped
+
+  # Executes `body` while `cond` is truthy.
+  def self?.while_: (untyped cond, untyped body) -> untyped
+
+  # Assigns `value` to `name`, where `name` must be an `Variable`.
+  #
+  # Returns `value`.
+  def self?.assign: (untyped name, untyped value) -> untyped
+
+  # Executes and returns `iftrue` or `iffalse` based on `cond`.
+  def self?.if_: (untyped cond, untyped iftrue, untyped iffalse) -> untyped
+
+  def self?.get: (untyped text, untyped start, untyped amnt) -> untyped
+
+  def self?.set: (untyped text, untyped start, untyped amnt, untyped repl) -> untyped
+end

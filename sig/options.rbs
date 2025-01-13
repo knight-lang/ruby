@@ -1,0 +1,11 @@
+module Knight
+  class Options
+    def floats?: () -> true
+
+    def list_literal?: () -> true
+
+    def boolean_functions?: () -> true
+  end
+
+  def self?.options: () -> untyped
+end

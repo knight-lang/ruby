@@ -30,8 +30,8 @@ module Knight
     when Integer     then Int.new val
     when String      then Str.new val
     when Array       then List.new val.map { Value _1 }
-    when true, false then Boolean.new _1
-    when nil         then Null.new _1
+    when true, false then Boolean.new val
+    when nil         then Null.new
     else raise TypeError, "Unknown type to `Value`: #{val.class}"
     end
   end

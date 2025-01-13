@@ -1,0 +1,38 @@
+module Knight
+  # The array type within Knight.
+  class List < Literal
+    # Parses a List out from the stream.
+    def self.parse: (untyped stream) -> untyped
+
+    # Converting a `List` to a string is done by joining it with newlines
+    def to_s: () -> untyped
+
+    # The integer representation of a `List` is its element count
+    def to_i: () -> untyped
+
+    # The array representation of `List` is simply its data
+    def to_a: () -> untyped
+
+    # A List is truthy when it's not empty.
+    def truthy?: () -> untyped
+
+    # Adding to a list converts `rhs` to list and concatenates teh two.
+    def +: (untyped rhs) -> untyped
+
+    # Repeats the list by `amount` times
+    def *: (untyped amount) -> untyped
+
+    # Joins the list by interspersing `sep` between its elements
+    def join: (untyped sep) -> untyped
+
+    # `**` is used within Knight
+    alias ** join
+
+    # Compares `self` vs `other`, returning `nil` if `other` isn't convertible to an array.
+    def <=>: (untyped other) -> (untyped | nil)
+
+    # Gets the value at `index`, using the same indexing operations as `Array`s. If the result is an
+    # array, it's converted to a `List`.
+    def []: (*untyped) ?{ (?) -> untyped } -> untyped
+  end
+end

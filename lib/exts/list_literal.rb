@@ -7,7 +7,7 @@ module Knight
     def self.parse(stream)
       return unless Knight.options.list_literal?
       stream.matches /\G\{/ or return
-      vals = []
+      vals = [] #: untyped
       until stream.matches /\G\}/
         vals << Value.parse(stream) || stream.raise("untermianted `{...}` sequence")
       end

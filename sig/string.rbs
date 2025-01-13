@@ -1,0 +1,31 @@
+module Knight
+  # The string class in Knight.
+  class Str < Literal
+    # Parses a `Str` from the `stream`, returning `None` if the
+    # nothing can be parsed.
+    #
+    # If a starting quote is matched and no ending quote is, then a
+    # `ParseError` will be raised.
+    def self.parse: (untyped stream) -> (nil | untyped)
+
+    def truthy?: () -> untyped
+
+    def to_a: () -> untyped
+
+    def to_i: () -> untyped
+
+    # Concatenates `self` and `rhs`
+    def +: (untyped rhs) -> untyped
+
+    # Repeats `self` for `rhs` times
+    def *: (untyped rhs) -> untyped
+
+    # Checks to see if `self` is lexicographically less than `rhs`.
+    def <: (untyped rhs) -> untyped
+
+    # Checks to see if `self` is lexicographically greater than `rhs`.
+    def >: (untyped rhs) -> untyped
+
+    def []: (untyped index) -> untyped
+  end
+end

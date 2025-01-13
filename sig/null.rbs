@@ -1,51 +1,32 @@
 module Knight
   # The `NULL` type within Knight.
   class Null < Literal
-    TYPES.append self
-
     # Returns `Null` if the stream starts with `N`.
-    def self.parse(stream)
-      stream.matches /\GN[A-Z]*/ and new
-    end
+    def self.parse: (untyped stream) -> untyped
 
     # Create a constant, so we don't need to keep creating new `Null` instances.
-    INSTANCE = new(nil).freeze
-    private_constant :INSTANCE
+    INSTANCE: untyped
 
     # Returns the singleton instance of `null` that exists.
-    def self.new
-      INSTANCE
-    end
+    def self.new: () -> untyped
 
     # Simply returns `0`
-    def to_i
-      0
-    end
+    def to_i: () -> 0
 
     # Create a constant, as it's ever-so-slightly faster than creating an array.
-    EMPTY_ARRAY = ([] #: Array[Value]
-      .freeze)
-    private_constant :EMPTY_ARRAY
+    EMPTY_ARRAY: ::Array[untyped]
 
     # Simply returns an empty array.
-    def to_a
-      EMPTY_ARRAY
-    end
+    def to_a: () -> untyped
 
     # Simply returns an empty string.
-    def to_s
-      ''
-    end
+    def to_s: () -> ""
 
     # Null is never truthy
-    def truthy?
-      false
-    end
+    def truthy?: () -> false
 
     # Gets the debugging representation of `null`.
-    def inspect
-      'null'
-    end
+    def inspect: () -> "null"
 
     # Null is only equal to itself.
     alias == equal?
