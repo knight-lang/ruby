@@ -10,7 +10,11 @@ class Stream
 
 	# Removes all leading whitespace and quotes
 	def strip
-		matches /\G([\s():]+|\#[^\n]*)+/
+		matches_ /\G([\s():]+|\#[^\n]*)+/
+	end
+
+	def raise(msg)
+		abort "todo: actual messages #{msg}"
 	end
 
 	# Returns the first character of the stream
@@ -24,6 +28,11 @@ class Stream
 	# stream is updated, and the `index`th group is returned. (The
 	# default value of `0` means the entire matched regex is returned.)
 	def matches(regex, index = 0)
+		strip
+		matches_(regex, index)
+	end
+
+	def matches_(regex, index = 0)
 		match = regex.match(@source) or return
 		@source.replace $'
 		match[index]

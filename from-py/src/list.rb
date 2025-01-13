@@ -1,4 +1,4 @@
-# The array class in Knight.
+# The array type within Knight.
 class List < Literal
 	TYPES.append self
 

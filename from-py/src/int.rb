@@ -10,9 +10,9 @@ class Int < Literal
 	def self.parse(stream)
 		match = stream.matches(/\G\d+(?!\.)/) and new match.to_i
 
-		if $options.floats?
-			match = stream.matches(/\G\d+\.(\d+([eE][-+]?\d+)?)/) and new match.to_f
-		end
+		# if $options.floats?
+		# 	match = stream.matches(/\G\d+\.(\d+([eE][-+]?\d+)?)/) and new match.to_f
+		# end
 
 		# Todo: complex types?
 	end

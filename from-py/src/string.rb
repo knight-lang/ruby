@@ -19,8 +19,8 @@ class Str < Literal
   # If a starting quote is matched and no ending quote is, then a
   # `ParseError` will be raised.
 	def self.parse(stream)
-		quote = stream.matches(/\G['"]/) or return
-		body = stream.matches(/\G([^#{quote}]*)#{quote}/, 1) or stream.raise "unterminated string encountered"
+		(quote = stream.peek) =~ /['"]/ or return
+		body = stream.matches(/\G#{quote}([^#{quote}]*)#{quote}/, 1) or stream.raise "unterminated string encountered"
 		new body
 	end
 
