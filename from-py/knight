@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require_relative 'knight/knight'
+require_relative 'src/knight'
 
 if $*.length != 2 || !%w[-e -f].include?($*.first)
 	abort "usage: #$0 (-e 'program' | -f file)"
