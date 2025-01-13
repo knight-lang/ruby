@@ -3,7 +3,7 @@ module Knight
   #
   # As per the Knight specs, the only number type is an integer, which this class represents. However,
   # as an extension, other types are also accepted as long as the option is set.
-  class Int < Literal
+  class Int < Literal[Integer]
     # Parses a Number out from the stream.
     # This returns `None` if the stream doesn't start with a digit.
     def self.parse: (untyped stream) -> untyped

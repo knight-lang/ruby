@@ -1,36 +1,43 @@
 module Knight
+  interface _Literal
+    def to_s: () -> String
+    def to_i: () -> Integer
+    def to_a: () -> Array[Value]
+    def truthy?: () -> boolish
+    def inspect: () -> String
+    def ==: (untyped) -> bool
+  end
+
   # A class used to represent a value that has a piece of data associated
   # with it.
   #
   # This is not meant to be initialized directly, and instead the
   # subclasses of it should be used.
-  class Literal < Value
-    @data: untyped
-
+  class Literal[T < _Literal] < Value
     include Comparable
 
-    attr_reader data: untyped
+    attr_reader data: T
 
     # Creates a new `Literal` instance with the given data.
-    def initialize: (untyped data) -> void
+    def initialize: (T data) -> void
 
     # Running a Literal simply returns itself.
     alias run itself
 
     # Simply converts this class's `data` to a `str`.
-    def to_s: () -> untyped
+    def to_s: () -> String
 
     # Simply converts this class's `data` to an `int`.
-    def to_i: () -> untyped
+    def to_i: () -> Integer
 
     # Simply converts this class's `data` to an `bool`.
-    def truthy?: () -> untyped
+    def truthy?: () -> boolish
 
     # Gets a debugging representation of this class.
-    def inspect: () -> untyped
+    def inspect: () -> String
 
     # Returns whether `rhs` is of the _same_ class,
     # and their data is equivalent.
-    def ==: (untyped rhs) -> untyped
+    def ==: (untyped rhs) -> bool
   end
 end

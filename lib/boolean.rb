@@ -38,6 +38,7 @@ module Knight
 
     # Converts `other` to a boolean and compares them.
     def <=>(other)
+      return nil unless defined? other.truthy?
       to_i <=> (other.truthy? ? 1 : 0)
     end
 

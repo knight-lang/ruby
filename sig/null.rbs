@@ -1,6 +1,6 @@
 module Knight
   # The `NULL` type within Knight.
-  class Null < Literal
+  class Null < Literal[nil]
     # Returns `Null` if the stream starts with `N`.
     def self.parse: (untyped stream) -> untyped
 

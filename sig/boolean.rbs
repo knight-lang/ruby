@@ -1,34 +1,20 @@
 module Knight
-  # Used to represent boolean types within Knight
-  class Boolean < Literal
-    # Parses a `Boolean` if the stream starts with `T` or `F`.
-    def self.parse: (untyped stream) -> untyped
+  class Boolean < Literal[bool]
+    def self.parse: (Stream stream) -> instance?
 
-    # Create a constant, so we don't need to keep creating new `Boolean` instances.
-    TRUE: untyped
+    TRUE: instance
+    FALSE: instance
 
-    FALSE: untyped
+    def self.new: (boolish) -> instance
 
-    # Returns a true or false `Boolean` instance.
-    def self.new: (untyped boolean) -> untyped
-
-    # Returns whether the Boolean is truthy
-    def truthy?: () -> untyped
-
-    # Returns `1` for true and `0` for false.
+    def truthy?: () -> boolish
     def to_i: () -> (1 | 0)
-
-    # Returns an array of `self` if `self` is true, else nothing.
-    def to_a: () -> (::Array[self] | ::Array[untyped])
-
-    # Booleans are only equal with `equal?`, because of an implementation detail.
+    def to_a: () -> (Array[self] | [])
     alias == equal?
 
-    # Converts `other` to a boolean and compares them.
-    def <=>: (untyped other) -> untyped
+    def <=>: (untyped other) -> Integer?
 
-    def +: (untyped other) -> untyped
-
-    def *: (untyped other) -> untyped
+    def +: (_Truthy other) -> Boolean
+    def *: (_Truthy other) -> Boolean
   end
 end

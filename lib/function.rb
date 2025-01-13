@@ -57,7 +57,9 @@ module Knight
 
   register def random
     # Returns a random number from 0 through 0xffff_ffff.
-    Int.new rand 0..0xffff_ffff
+    Int.new(
+      rand 0..0xffff_ffff #: Integer
+    )
   end
 
   register def eval_(text)

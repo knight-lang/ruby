@@ -1,6 +1,6 @@
 module Knight
   # The string class in Knight.
-  class Str < Literal
+  class Str < Literal[String]
     # Parses a `Str` from the `stream`, returning `None` if the
     # nothing can be parsed.
     #

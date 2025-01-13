@@ -18,10 +18,10 @@ module Knight
     alias run itself
 
     # Simply converts this class's `data` to a `str`.
-    def to_s = @data.to_s
+    def to_s = (__any__ = @data).to_s
 
     # Simply converts this class's `data` to an `int`.
-    def to_i = @data.to_i
+    def to_i = (__any__ = @data).to_i
 
     # Simply converts this class's `data` to an `bool`.
     def truthy? = @data

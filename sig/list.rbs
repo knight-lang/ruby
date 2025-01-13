@@ -1,6 +1,6 @@
 module Knight
   # The array type within Knight.
-  class List < Literal
+  class List < Literal[Array[Value]]
     # Parses a List out from the stream.
     def self.parse: (untyped stream) -> untyped
 

@@ -1,0 +1,5 @@
+module Knight
+  interface _Truthy
+    def truthy?: () -> boolish
+  end
+end
