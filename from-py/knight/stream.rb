@@ -15,7 +15,7 @@ class Stream
 
 	# Returns the first character of the stream
 	def peek
-		empty? ? nil : self.source[0]
+		empty? ? nil : @source[0]
 	end
 
 	# Checks to see if the start of the stream matches `rxp`.
@@ -24,7 +24,7 @@ class Stream
 	# stream is updated, and the `index`th group is returned. (The
 	# default value of `0` means the entire matched regex is returned.)
 	def matches(regex, index = 0)
-		match = regex.match(source) or return
+		match = regex.match(@source) or return
 		@source.replace $'
 		match[index]
 	end

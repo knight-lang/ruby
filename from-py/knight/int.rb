@@ -44,5 +44,6 @@ class Int < Literal
 	# the power of operation conforming to the Knight specs.
 	def ^(rhs) = Int.new((@data ** rhs.to_i).to_i)
 
-	def <=>(rhs) = @data <=> rhs.to_i
+	def <(rhs) = @data < rhs.to_i
+	def >(rhs) = @data > rhs.to_i
 end

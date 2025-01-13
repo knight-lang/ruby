@@ -11,8 +11,9 @@ require_relative 'string'
 require_relative 'variable'
 
 module Knight
+  module_function
   def run(stream)
-    value = Value.parse Stream.new stream
+    value = Value.parse Stream.new +stream
     raise ParseError, 'nothing to parse' if value.nil?
 
     value.run
