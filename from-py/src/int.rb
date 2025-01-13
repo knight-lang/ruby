@@ -14,7 +14,7 @@ class Int < Literal
 
 	def truthy? = @data.nonzero?
 
-	def to_a = @data.digits.reverse
+	def to_a = @data.digits.reverse.map { Int.new _1 }
 
 	# Converts `rhs` to an `Int` and adds it to `self.`
 	def +(rhs) = Int.new(@data + rhs.to_i)
@@ -31,21 +31,23 @@ class Int < Literal
 	# This will raise a `RunError` if `rhs` is zero.
 	def /(rhs)
 		rhs_int = rhs.to_i.nonzero? or raise RunError 'Cannot divide by zero!'
-		Int.new(@data / rhs_int)
+		Int.new(@data.fdiv(rhs_int).truncate)
 	end
+
 	# Converts `rhs` to an `int` and modulos `self` by it, with the
 	# modulo operation conforming to the Knight specs.
 	#
 	# This will raise a `RunError` if `rhs` is zero.
-	def /(rhs)
+	def %(rhs)
 		rhs_int = rhs.to_i.nonzero? or raise RunError 'Cannot modulo by zero!'
 		Int.new(@data % rhs_int)
 	end
 
 	# Converts `rhs` to an `int` and exponentiates `self` by it, with
 	# the power of operation conforming to the Knight specs.
-	def ^(rhs) = Int.new((@data ** rhs.to_i).to_i)
+	def **(rhs) = Int.new((@data ** rhs.to_i).to_i)
 
-	def <(rhs) = @data < rhs.to_i
-	def >(rhs) = @data > rhs.to_i
+	def <=>(rhs)
+		@data <=> rhs.to_i
+	end
 end

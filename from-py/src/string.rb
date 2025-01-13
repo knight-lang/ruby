@@ -26,7 +26,7 @@ class Str < Literal
 
 	def truthy? = !@data.empty?
 
-	def to_a = @data.chars
+	def to_a = @data.chars.map { Str.new _1 }
 
 	def to_i = @data.strip[/\A[-+]?\d+/].to_i
 

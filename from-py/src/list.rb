@@ -31,7 +31,7 @@ class List < Literal
 		List.new @data * rhs.to_i
 	end
 
-	def ^(rhs)
+	def **(rhs)
 		Str.new @data.join rhs.to_s
 	end
 

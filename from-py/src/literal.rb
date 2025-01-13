@@ -4,6 +4,7 @@
 # This is not meant to be initialized directly, and instead the
 # subclasses of it should be used.
 class Literal < Value
+	include Comparable
 
 	protected attr_reader :data
 
