@@ -1,3 +1,5 @@
+require_relative 'options'
+
 require_relative 'error'
 require_relative 'value'
 require_relative 'literal'
@@ -7,7 +9,6 @@ require_relative 'int'
 require_relative 'list'
 require_relative 'null'
 require_relative 'stream'
-require_relative 'options'
 require_relative 'string'
 require_relative 'variable'
 

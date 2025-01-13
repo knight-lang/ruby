@@ -1,9 +1,11 @@
-module Kn
+module Knight
   class Options
-    def escapes_and_interpolation? = true
-    def modulo_strings? = true
+    def floats? = true
+    def list_literal? = true
+    def boolean_functions? = true
   end
 
-  def self.options = $options
-  $options = Options.new
+  module_function
+
+  def options = Options.new
 end

@@ -30,7 +30,7 @@ module Knight
 
     # Converts `rhs` to an `Int` and adds it to `self.`
     def +(rhs)
-      @data + rhs.to_i
+      Int.new @data + rhs.to_i
     end
 
     # Converts `rhs` to an `Int` and subtracts it from `self.`

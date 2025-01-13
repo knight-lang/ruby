@@ -1,70 +1,40 @@
-require_relative 'error'
-
-module Kn
-  class ParseError < Error
-    def initialize(message, whence)
-      super "#{whence}: #{message}"
-    end
+# The class used when parsing data.
+class Stream
+  # Creates a new `Stream` with the given source.
+  def initialize(source)
+    @source = source
   end
 
-  class Location
-    attr_reader :file, :lineno
+  # Returns whether the stream is empty.
+  def empty? = @source.empty?
 
-    def initialize(file, lineno)
-      @file, @lineno = file, lineno
-    end
-
-    def to_s
-      "#@file:#@lineno"
-    end
+  # Removes all leading whitespace and quotes
+  def strip
+    matches_ /\G([\s():]+|\#[^\n]*)+/
   end
 
-  class Stream
-    def initialize(source, file = '<eval>', parsers: nil)
-      @source, @file = source, file
-      @index = 0
-      @parsers = parsers
-    end
+  def raise(msg)
+    abort "todo: actual messages #{msg}"
+  end
 
-    def lineno(at: @index)
-      @source[..at].count("\n")
-    end
+  # Returns the first character of the stream
+  def peek
+    empty? ? nil : @source[0]
+  end
 
-    def raise(msg)
-      err = ParseError.new(msg, location)
-      err.set_backtrace caller
-      super err
-    end
+  # Checks to see if the start of the stream matches `rxp`.
+  #
+  # If the stream doesn't match, `None` is returned. Otherwise, the
+  # stream is updated, and the `index`th group is returned. (The
+  # default value of `0` means the entire matched regex is returned.)
+  def matches(regex, index = 0)
+    strip
+    matches_(regex, index)
+  end
 
-    def location(at: @index)
-      Location.new(@file, lineno(at: at))
-    end
-
-    def parse!
-      @parsers.each do |parser|
-        p = parser.parse(self) and return p
-      end
-
-      raise 'nothing to parse'
-    end
-
-    def match!(regex, group = 0)
-      match = @source.match(regex, @index) or return
-
-      unless match.begin(0) == @index
-        raise "<BUG> regex #{regex} doesn't exclusive match at the start"
-      end
-
-      string = match[group]
-      string.instance_variable_set(:@start, @index)
-      string.instance_variable_set(:@stream, self)
-      def string.location = @stream.location(at: @start)
-
-      @index = match.end(0)
-      string
-    end
+  def matches_(regex, index = 0)
+    match = regex.match(@source) or return
+    @source.replace $'
+    match[index]
   end
 end
-
-stream = Kn::Stream.new("hello world")
-

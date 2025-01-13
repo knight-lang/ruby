@@ -8,6 +8,7 @@ module Knight
       stream.matches /\GN[A-Z]*/ and new
     end
 
+    # Create a constant, so we don't need to keep creating new `Null` instances.
     INSTANCE = new(nil).freeze
     private_constant :INSTANCE
 
@@ -21,7 +22,7 @@ module Knight
       0
     end
 
-    # Create a constant, as it's ever-so-slightly faster than creating an array.s
+    # Create a constant, as it's ever-so-slightly faster than creating an array.
     EMPTY_ARRAY = [].freeze
     private_constant :EMPTY_ARRAY
 
@@ -46,8 +47,6 @@ module Knight
     end
 
     # Null is only equal to itself.
-    def ==(rhs)
-      rhs.is_a?(Null)
-    end
+    alias == equal?
   end
 end
