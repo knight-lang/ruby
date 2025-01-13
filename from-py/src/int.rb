@@ -1,23 +1,36 @@
-# The number class in Knight.
+# The Basic numeric class within Knight.
 #
-# As per the Knight specs, the only number type within Knight is
-# integral numbers. As such, we use Ruby's builtin `Integer` class.
-
+# As per the Knight specs, the only number type is an integer, which this class represents. However,
+# as an extension, other types are also accepted as long as the option is set.
 class Int < Literal
 	TYPES.append self
 
 	# Parses a Number out from the stream.
 	# This returns `None` if the stream doesn't start with a digit.
 	def self.parse(stream)
-		match = stream.matches(/\G\d+/) and new match.to_i
+		match = stream.matches(/\G\d+(?!\.)/) and new match.to_i
+
+		if $options.floats?
+			match = stream.matches(/\G\d+\.(\d+([eE][-+]?\d+)?)/) and new match.to_f
+		end
+
+		# Todo: complex types?
 	end
 
-	def truthy? = @data.nonzero?
+	# Returns whether `self` is nonzero.
+	def truthy?
+		@data.nonzero?
+	end
 
-	def to_a = @data.digits.reverse.map { Int.new _1 }
+	# Returns the digits in `self`
+	def to_a
+		@data.digits.reverse.map { Int.new _1 }
+	end
 
 	# Converts `rhs` to an `Int` and adds it to `self.`
-	def +(rhs) = Int.new(@data + rhs.to_i)
+	def +(rhs)
+		@data + rhs.to_i
+	end
 
 	# Converts `rhs` to an `Int` and subtracts it from `self.`
 	def -(rhs) = Int.new(@data - rhs.to_i)

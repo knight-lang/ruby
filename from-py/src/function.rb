@@ -51,15 +51,6 @@ end
 register def prompt
 	line = gets&.sub(/\r?\n?\z/, '') or return Null.new
 	Str.new line
-	# try:
-	# 	line = input()
-	# except EOFError:
-	# 	return Null()
-
-	# if line and line[-1] == '\r':
-	# 	line = line[:-1]
-
-	# return Str(line)
 end
 
 register def random
