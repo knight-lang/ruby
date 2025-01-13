@@ -11,6 +11,10 @@ class Boolean < Literal
 		@data
 	end
 
+	def to_i
+		@data ? 1 : 0
+	end
+
 	def to_a
 		@data ? [self] : []
 	end

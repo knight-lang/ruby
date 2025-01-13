@@ -12,7 +12,7 @@ class Int < Literal
 		match = stream.matches(/\G\d+/) and new match.to_i
 	end
 
-	def to_a = digits.reverse
+	def to_a = @data.digits.reverse
 
 	# Converts `rhs` to an `Int` and adds it to `self.`
 	def +(rhs) = Int.new(@data + rhs.to_i)

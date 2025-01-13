@@ -1,5 +1,6 @@
 # The string class in Knight.
 class Str < Literal
+	TYPES.append self
 	# BEGIN_REGEX: re.Pattern = re.compile(r'[\'\"]')
 	# SINGLE_REGEX: re.Pattern = re.compile(r"([^']*)'")
 	# DOUBLE_REGEX: re.Pattern = re.compile(r'([^"]*)"')
@@ -23,14 +24,12 @@ class Str < Literal
 		new body
 	end
 
-	def to_a = @body.chars
+	def to_a = @data.chars
 
-	def inspect = @body.inspect
-
-	def to_i = @body.strip[/\A[-+]?\d+/].to_i
+	def to_i = @data.strip[/\A[-+]?\d+/].to_i
 
 	# Concatenates `self` and `rhs`
-	def +(rhs) = Str.new("#@self#{rhs}")
+	def +(rhs) = Str.new("#@data#{rhs}")
 
 	# Repeats `self` for `rhs` times
 	def *(rhs) = Str.new(@data * rhs.to_i)

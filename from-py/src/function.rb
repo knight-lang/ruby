@@ -98,7 +98,7 @@ end
 
 # Quits with the given status code.
 register def quit_(code)
-	quit(int(code))
+	exit code.to_i
 end
 
 # Negates its argument.
@@ -131,7 +131,7 @@ register def output(arg)
 		puts s
 	end
 
-	nil
+	Null.new
 end
 
 # Returns `arg` numerically negated
@@ -161,9 +161,9 @@ end
 
 register def ascii(arg)
 	if (arg = arg.run).is_a? Int
-		Str.new arg.to_i.ord
+		Str.new arg.to_i.chr
 	else
-		Int.new arg.to_s.chr
+		Int.new arg.to_s.ord
 	end
 end
 
@@ -238,7 +238,7 @@ end
 # Executes `body` while `cond` is truthy.
 register def while_(cond, body)
 	body.run while cond.truthy?
-	nil
+	Null.new
 end
 
 #	Assigns `value` to `name`, where `name` must be an `Variable`.

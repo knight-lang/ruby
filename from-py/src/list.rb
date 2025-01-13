@@ -38,4 +38,13 @@ class List < Literal
 	def <=>(rhs)
 		@data <=> rhs.to_a
 	end
+
+	def [](index)
+		result = @data[index]
+		# if result.is_a? Array
+			# List.new result
+		# else
+			result
+		# end
+	end
 end
