@@ -37,7 +37,7 @@ class Stream
 
   def matches!(regex, index = 0)
     match = regex.match(@source, @position) or return
-    @position = match.end 0#@source.replace $'
+    @position = match.end 0 #: Integer
     match[index]
   end
 end
