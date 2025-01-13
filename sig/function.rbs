@@ -29,7 +29,8 @@ module Knight
   #
   # If no name is supplied, it will use the upper-case version of the
   # first letter of the function's name.
-  def self?.register: (?untyped? which, untyped name) -> untyped
+  def self?.register: (untyped name) -> untyped
+                    | (untyped which, untyped name) -> untyped
 
   # Reads a single line from stdin.
   def self?.prompt: () -> untyped

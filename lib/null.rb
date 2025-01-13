@@ -9,7 +9,7 @@ module Knight
     end
 
     # Create a constant, so we don't need to keep creating new `Null` instances.
-    INSTANCE = new(nil).freeze
+    INSTANCE = __skip__ = new(nil).freeze
     private_constant :INSTANCE
 
     # Returns the singleton instance of `null` that exists.

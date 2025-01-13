@@ -45,7 +45,7 @@ module Knight
   #
   # If no name is supplied, it will use the upper-case version of the
   # first letter of the function's name.
-  def register(which=nil, name)
+  __skip__ = def register(which=nil, name) # TODO
     $_FUNCS[which || name[0].upcase] = method(name)
   end
 
